@@ -65,34 +65,6 @@ public class WxMpMassMessageAPITest {
     Assert.assertNotNull(massResult.getMsgId());
   }
 
-  @Test
-  public void testTextMassGroupMessageSend() throws WxErrorException {
-    WxMpMassTagMessage massMessage = new WxMpMassTagMessage();
-    massMessage.setMsgType(WxConsts.MASS_MSG_TEXT);
-    massMessage.setContent("测试群发消息\n欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
-    massMessage
-      .setTagId(this.wxService.getUserTagService().tagGet().get(0).getId());
-
-    WxMpMassSendResult massResult = this.wxService
-      .massGroupMessageSend(massMessage);
-    Assert.assertNotNull(massResult);
-    Assert.assertNotNull(massResult.getMsgId());
-  }
-
-  @Test(dataProvider = "massMessages")
-  public void testMediaMassGroupMessageSend(String massMsgType, String mediaId)
-    throws WxErrorException {
-    WxMpMassTagMessage massMessage = new WxMpMassTagMessage();
-    massMessage.setMsgType(massMsgType);
-    massMessage.setMediaId(mediaId);
-    massMessage.setTagId(this.wxService.getUserTagService().tagGet().get(0).getId());
-
-    WxMpMassSendResult massResult = this.wxService
-      .massGroupMessageSend(massMessage);
-    Assert.assertNotNull(massResult);
-    Assert.assertNotNull(massResult.getMsgId());
-  }
-
   @DataProvider
   public Object[][] massMessages() throws WxErrorException, IOException {
     Object[][] messages = new Object[4][];

@@ -112,40 +112,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     this.jsapiTicketExpiresTime = 0;
   }
 
-  /**
-   * 卡券api_ticket
-   */
-  @Override
-  public String getCardApiTicket() {
-    return this.cardApiTicket;
-  }
-
-  public void setCardApiTicket(String cardApiTicket) {
-    this.cardApiTicket = cardApiTicket;
-  }
-
-  @Override
-  public Lock getCardApiTicketLock() {
-    return this.cardApiTicketLock;
-  }
-
-  @Override
-  public boolean isCardApiTicketExpired() {
-    return System.currentTimeMillis() > this.cardApiTicketExpiresTime;
-  }
-
-  @Override
-  public synchronized void updateCardApiTicket(String cardApiTicket, int expiresInSeconds) {
-    this.cardApiTicket = cardApiTicket;
-    // 预留200秒的时间
-    this.cardApiTicketExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
-  }
-
-  @Override
-  public void expireCardApiTicket() {
-    this.cardApiTicketExpiresTime = 0;
-  }
-
   @Override
   public String getAppId() {
     return this.appId;

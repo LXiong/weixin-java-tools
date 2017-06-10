@@ -58,25 +58,6 @@ public interface WxMpConfigStorage {
    */
   void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
-  String getCardApiTicket();
-
-  Lock getCardApiTicketLock();
-
-  boolean isCardApiTicketExpired();
-
-  /**
-   * 强制将卡券api ticket过期掉
-   */
-  void expireCardApiTicket();
-
-  /**
-   * 应该是线程安全的
-   *
-   * @param cardApiTicket    新的cardApi ticket值
-   * @param expiresInSeconds 过期时间，以秒为单位
-   */
-  void updateCardApiTicket(String cardApiTicket, int expiresInSeconds);
-
   String getAppId();
 
   String getSecret();
