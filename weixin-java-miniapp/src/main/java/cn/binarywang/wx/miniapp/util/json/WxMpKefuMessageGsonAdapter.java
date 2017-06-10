@@ -8,17 +8,17 @@
  */
 package cn.binarywang.wx.miniapp.util.json;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import com.google.gson.*;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
-public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessage> {
+public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMaKefuMessage> {
 
   @Override
-  public JsonElement serialize(WxMpKefuMessage message, Type typeOfSrc, JsonSerializationContext context) {
+  public JsonElement serialize(WxMaKefuMessage message, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("touser", message.getToUser());
     messageJson.addProperty("msgtype", message.getMsgType());
@@ -63,7 +63,7 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
     if (WxConsts.CUSTOM_MSG_NEWS.equals(message.getMsgType())) {
       JsonObject newsJsonObject = new JsonObject();
       JsonArray articleJsonArray = new JsonArray();
-      for (WxMpKefuMessage.WxArticle article : message.getArticles()) {
+      for (WxMaKefuMessage.WxArticle article : message.getArticles()) {
         JsonObject articleJson = new JsonObject();
         articleJson.addProperty("title", article.getTitle());
         articleJson.addProperty("description", article.getDescription());

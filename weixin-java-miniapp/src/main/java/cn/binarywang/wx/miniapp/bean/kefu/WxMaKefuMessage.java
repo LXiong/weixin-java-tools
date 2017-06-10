@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author chanjarster
  */
-public class WxMpKefuMessage implements Serializable {
+public class WxMaKefuMessage implements Serializable {
   private static final long serialVersionUID = -9196732086954365246L;
 
   private String toUser;

@@ -3,26 +3,21 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.*;
 import cn.binarywang.wx.miniapp.bean.*;
 import cn.binarywang.wx.miniapp.bean.result.*;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.*;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.concurrent.locks.Lock;
 
-public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, RequestHttp<H, P> {
+public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, RequestHttp<H, P> {
 
   private static final JsonParser JSON_PARSER = new JsonParser();
 

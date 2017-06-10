@@ -1,12 +1,12 @@
 package cn.binarywang.wx.miniapp.builder.kefu;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 
 /**
  * 视频消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpKefuMessage.VOICE()
+ * 用法: WxMaKefuMessage m = WxMaKefuMessage.VOICE()
  *                              .mediaId(...)
  *                              .title(...)
  *                              .thumbMediaId(..)
@@ -48,8 +48,8 @@ public final class VideoBuilder extends BaseBuilder<VideoBuilder> {
   }
 
   @Override
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = super.build();
+  public WxMaKefuMessage build() {
+    WxMaKefuMessage m = super.build();
     m.setMediaId(this.mediaId);
     m.setTitle(this.title);
     m.setDescription(this.description);

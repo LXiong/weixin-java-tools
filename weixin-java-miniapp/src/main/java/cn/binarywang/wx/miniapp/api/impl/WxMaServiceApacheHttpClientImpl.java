@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -22,7 +22,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * apache-http方式实现
  */
-public class WxMpServiceApacheHttpClientImpl extends AbstractWxMpServiceImpl<CloseableHttpClient, HttpHost> {
+public class WxMaServiceApacheHttpClientImpl extends AbstractWxMaServiceImpl<CloseableHttpClient, HttpHost> {
   private CloseableHttpClient httpClient;
   private HttpHost httpProxy;
 
@@ -77,8 +77,8 @@ public class WxMpServiceApacheHttpClientImpl extends AbstractWxMpServiceImpl<Clo
       }
 
       if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-            this.getWxMpConfigStorage().getSecret());
+        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppid(),
+          this.getWxMpConfigStorage().getSecret());
         try {
           HttpGet httpGet = new HttpGet(url);
           if (this.getRequestHttpProxy() != null) {
@@ -104,6 +104,7 @@ public class WxMpServiceApacheHttpClientImpl extends AbstractWxMpServiceImpl<Clo
     } finally {
       lock.unlock();
     }
+
     return this.getWxMpConfigStorage().getAccessToken();
   }
 }

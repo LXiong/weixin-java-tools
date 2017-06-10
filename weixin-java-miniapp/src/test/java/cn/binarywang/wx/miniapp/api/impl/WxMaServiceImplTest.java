@@ -1,20 +1,18 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
-import cn.binarywang.wx.miniapp.api.test.TestConfigStorage;
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.api.WxConsts;
 import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 @Test
 @Guice(modules = ApiTestModule.class)
-public class WxMpServiceImplTest {
+public class WxMaServiceImplTest {
 
   @Inject
-  private WxMpService wxService;
+  private WxMaService wxService;
 
   @Test
   public void testCheckSignature() {

@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import jodd.http.*;
 import jodd.http.net.SocketHttpConnectionProvider;
 import me.chanjar.weixin.common.bean.WxAccessToken;
@@ -15,7 +15,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * jodd-http方式实现
  */
-public class WxMpServiceJoddHttpImpl extends AbstractWxMpServiceImpl<HttpConnectionProvider, ProxyInfo> {
+public class WxMaServiceJoddHttpImpl extends AbstractWxMaServiceImpl<HttpConnectionProvider, ProxyInfo> {
   private HttpConnectionProvider httpClient;
   private ProxyInfo httpProxy;
 
@@ -63,7 +63,8 @@ public class WxMpServiceJoddHttpImpl extends AbstractWxMpServiceImpl<HttpConnect
       }
 
       if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getSecret());
+        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppid(),
+          this.getWxMpConfigStorage().getSecret());
 
         HttpRequest request = HttpRequest.get(url);
 

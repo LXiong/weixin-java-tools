@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.InputStream;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Daniel Qian

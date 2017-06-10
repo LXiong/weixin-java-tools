@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.api.test.TestConfigStorage;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplate;
@@ -27,7 +27,7 @@ import java.util.List;
 @Guice(modules = ApiTestModule.class)
 public class WxMpTemplateMsgServiceImplTest {
   @Inject
-  protected WxMpService wxService;
+  protected WxMaService wxService;
 
   @Test(invocationCount = 5, threadPoolSize = 3)
   public void testSendTemplateMsg() throws WxErrorException {

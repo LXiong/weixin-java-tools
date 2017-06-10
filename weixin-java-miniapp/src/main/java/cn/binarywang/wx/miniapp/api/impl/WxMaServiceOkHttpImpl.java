@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -13,7 +13,7 @@ import okhttp3.*;
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 
-public class WxMpServiceOkHttpImpl extends AbstractWxMpServiceImpl<ConnectionPool, OkHttpProxyInfo> {
+public class WxMaServiceOkHttpImpl extends AbstractWxMaServiceImpl<ConnectionPool, OkHttpProxyInfo> {
   private ConnectionPool httpClient;
   private OkHttpProxyInfo httpProxy;
 
@@ -43,7 +43,8 @@ public class WxMpServiceOkHttpImpl extends AbstractWxMpServiceImpl<ConnectionPoo
       }
 
       if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,this.getWxMpConfigStorage().getSecret());
+        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppid(),
+          this.getWxMpConfigStorage().getSecret());
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(httpClient);
         //设置代理

@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMpQrcodeService;
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
 import cn.binarywang.wx.miniapp.util.http.QrCodeRequestExecutor;
 import com.google.gson.JsonObject;
@@ -18,10 +18,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/qrcode";
-  private WxMpService wxMpService;
+  private WxMaService wxMaService;
 
-  public WxMpQrcodeServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
+  public WxMpQrcodeServiceImpl(WxMaService wxMaService) {
+    this.wxMaService = wxMaService;
   }
 
   @Override
@@ -50,7 +50,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     scene.addProperty("scene_id", sceneId);
     actionInfo.add("scene", scene);
     json.add("action_info", actionInfo);
-    String responseContent = this.wxMpService.post(url, json.toString());
+    String responseContent = this.wxMaService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
@@ -68,7 +68,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     scene.addProperty("scene_id", sceneId);
     actionInfo.add("scene", scene);
     json.add("action_info", actionInfo);
-    String responseContent = this.wxMpService.post(url, json.toString());
+    String responseContent = this.wxMaService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
@@ -82,14 +82,14 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     scene.addProperty("scene_str", sceneStr);
     actionInfo.add("scene", scene);
     json.add("action_info", actionInfo);
-    String responseContent = this.wxMpService.post(url, json.toString());
+    String responseContent = this.wxMaService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
   @Override
   public File qrCodePicture(WxMpQrCodeTicket ticket) throws WxErrorException {
     String url = "https://mp.weixin.qq.com/cgi-bin/showqrcode";
-    return this.wxMpService.execute(QrCodeRequestExecutor.create(this.wxMpService.getRequestHttp()), url, ticket);
+    return this.wxMaService.execute(QrCodeRequestExecutor.create(this.wxMaService.getRequestHttp()), url, ticket);
   }
 
   @Override
@@ -99,7 +99,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
       String resultUrl = String.format(url,
         URLEncoder.encode(ticket, StandardCharsets.UTF_8.name()));
       if (needShortUrl) {
-        return this.wxMpService.shortUrl(resultUrl);
+        return this.wxMaService.shortUrl(resultUrl);
       }
 
       return resultUrl;

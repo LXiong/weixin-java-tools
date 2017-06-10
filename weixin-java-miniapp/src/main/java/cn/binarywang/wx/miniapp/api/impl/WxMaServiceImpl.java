@@ -7,5 +7,5 @@ package cn.binarywang.wx.miniapp.api.impl;
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
  */
-public class WxMpServiceImpl extends WxMpServiceApacheHttpClientImpl {
+public class WxMaServiceImpl extends WxMaServiceApacheHttpClientImpl {
 }

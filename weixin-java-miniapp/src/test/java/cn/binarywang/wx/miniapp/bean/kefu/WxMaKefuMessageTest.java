@@ -5,10 +5,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
-public class WxMpKefuMessageTest {
+public class WxMaKefuMessageTest {
 
   public void testTextReply() {
-    WxMpKefuMessage reply = new WxMpKefuMessage();
+    WxMaKefuMessage reply = new WxMaKefuMessage();
     reply.setToUser("OPENID");
     reply.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
     reply.setContent("sfsfdsdf");
@@ -16,12 +16,12 @@ public class WxMpKefuMessageTest {
   }
 
   public void testTextBuild() {
-    WxMpKefuMessage reply = WxMpKefuMessage.TEXT().toUser("OPENID").content("sfsfdsdf").build();
+    WxMaKefuMessage reply = WxMaKefuMessage.TEXT().toUser("OPENID").content("sfsfdsdf").build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"text\",\"text\":{\"content\":\"sfsfdsdf\"}}");
   }
 
   public void testImageReply() {
-    WxMpKefuMessage reply = new WxMpKefuMessage();
+    WxMaKefuMessage reply = new WxMaKefuMessage();
     reply.setToUser("OPENID");
     reply.setMsgType(WxConsts.CUSTOM_MSG_IMAGE);
     reply.setMediaId("MEDIA_ID");
@@ -29,12 +29,12 @@ public class WxMpKefuMessageTest {
   }
 
   public void testImageBuild() {
-    WxMpKefuMessage reply = WxMpKefuMessage.IMAGE().toUser("OPENID").mediaId("MEDIA_ID").build();
+    WxMaKefuMessage reply = WxMaKefuMessage.IMAGE().toUser("OPENID").mediaId("MEDIA_ID").build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"image\",\"image\":{\"media_id\":\"MEDIA_ID\"}}");
   }
 
   public void testVoiceReply() {
-    WxMpKefuMessage reply = new WxMpKefuMessage();
+    WxMaKefuMessage reply = new WxMaKefuMessage();
     reply.setToUser("OPENID");
     reply.setMsgType(WxConsts.CUSTOM_MSG_VOICE);
     reply.setMediaId("MEDIA_ID");
@@ -42,12 +42,12 @@ public class WxMpKefuMessageTest {
   }
 
   public void testVoiceBuild() {
-    WxMpKefuMessage reply = WxMpKefuMessage.VOICE().toUser("OPENID").mediaId("MEDIA_ID").build();
+    WxMaKefuMessage reply = WxMaKefuMessage.VOICE().toUser("OPENID").mediaId("MEDIA_ID").build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"voice\",\"voice\":{\"media_id\":\"MEDIA_ID\"}}");
   }
 
   public void testVideoReply() {
-    WxMpKefuMessage reply = new WxMpKefuMessage();
+    WxMaKefuMessage reply = new WxMaKefuMessage();
     reply.setToUser("OPENID");
     reply.setMsgType(WxConsts.CUSTOM_MSG_VIDEO);
     reply.setMediaId("MEDIA_ID");
@@ -58,12 +58,12 @@ public class WxMpKefuMessageTest {
   }
 
   public void testVideoBuild() {
-    WxMpKefuMessage reply = WxMpKefuMessage.VIDEO().toUser("OPENID").title("TITLE").mediaId("MEDIA_ID").thumbMediaId("MEDIA_ID").description("DESCRIPTION").build();
+    WxMaKefuMessage reply = WxMaKefuMessage.VIDEO().toUser("OPENID").title("TITLE").mediaId("MEDIA_ID").thumbMediaId("MEDIA_ID").description("DESCRIPTION").build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"video\",\"video\":{\"media_id\":\"MEDIA_ID\",\"thumb_media_id\":\"MEDIA_ID\",\"title\":\"TITLE\",\"description\":\"DESCRIPTION\"}}");
   }
 
   public void testMusicReply() {
-    WxMpKefuMessage reply = new WxMpKefuMessage();
+    WxMaKefuMessage reply = new WxMaKefuMessage();
     reply.setToUser("OPENID");
     reply.setMsgType(WxConsts.CUSTOM_MSG_MUSIC);
     reply.setThumbMediaId("MEDIA_ID");
@@ -75,7 +75,7 @@ public class WxMpKefuMessageTest {
   }
 
   public void testMusicBuild() {
-    WxMpKefuMessage reply = WxMpKefuMessage.MUSIC()
+    WxMaKefuMessage reply = WxMaKefuMessage.MUSIC()
       .toUser("OPENID")
       .title("TITLE")
       .thumbMediaId("MEDIA_ID")
@@ -87,18 +87,18 @@ public class WxMpKefuMessageTest {
   }
 
   public void testNewsReply() {
-    WxMpKefuMessage reply = new WxMpKefuMessage();
+    WxMaKefuMessage reply = new WxMaKefuMessage();
     reply.setToUser("OPENID");
     reply.setMsgType(WxConsts.CUSTOM_MSG_NEWS);
 
-    WxMpKefuMessage.WxArticle article1 = new WxMpKefuMessage.WxArticle();
+    WxMaKefuMessage.WxArticle article1 = new WxMaKefuMessage.WxArticle();
     article1.setUrl("URL");
     article1.setPicUrl("PIC_URL");
     article1.setDescription("Is Really A Happy Day");
     article1.setTitle("Happy Day");
     reply.getArticles().add(article1);
 
-    WxMpKefuMessage.WxArticle article2 = new WxMpKefuMessage.WxArticle();
+    WxMaKefuMessage.WxArticle article2 = new WxMaKefuMessage.WxArticle();
     article2.setUrl("URL");
     article2.setPicUrl("PIC_URL");
     article2.setDescription("Is Really A Happy Day");
@@ -110,19 +110,19 @@ public class WxMpKefuMessageTest {
   }
 
   public void testNewsBuild() {
-    WxMpKefuMessage.WxArticle article1 = new WxMpKefuMessage.WxArticle();
+    WxMaKefuMessage.WxArticle article1 = new WxMaKefuMessage.WxArticle();
     article1.setUrl("URL");
     article1.setPicUrl("PIC_URL");
     article1.setDescription("Is Really A Happy Day");
     article1.setTitle("Happy Day");
 
-    WxMpKefuMessage.WxArticle article2 = new WxMpKefuMessage.WxArticle();
+    WxMaKefuMessage.WxArticle article2 = new WxMaKefuMessage.WxArticle();
     article2.setUrl("URL");
     article2.setPicUrl("PIC_URL");
     article2.setDescription("Is Really A Happy Day");
     article2.setTitle("Happy Day");
 
-    WxMpKefuMessage reply = WxMpKefuMessage.NEWS().toUser("OPENID").addArticle(article1).addArticle(article2).build();
+    WxMaKefuMessage reply = WxMaKefuMessage.NEWS().toUser("OPENID").addArticle(article1).addArticle(article2).build();
 
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"news\",\"news\":{\"articles\":[{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"},{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"}]}}");
   }

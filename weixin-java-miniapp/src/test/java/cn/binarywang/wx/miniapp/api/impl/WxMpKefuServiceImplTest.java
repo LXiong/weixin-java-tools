@@ -1,9 +1,9 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.api.test.TestConfigStorage;
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.kefu.request.WxMpKfAccountRequest;
 import cn.binarywang.wx.miniapp.bean.kefu.result.*;
 import com.google.inject.Inject;
@@ -28,12 +28,12 @@ import java.util.Date;
 public class WxMpKefuServiceImplTest {
 
   @Inject
-  protected WxMpService wxService;
+  protected WxMaService wxService;
 
   public void testSendKefuMpNewsMessage() throws WxErrorException {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
-    WxMpKefuMessage message = new WxMpKefuMessage();
+    WxMaKefuMessage message = new WxMaKefuMessage();
     message.setMsgType(WxConsts.CUSTOM_MSG_MPNEWS);
     message.setToUser(configStorage.getOpenid());
     message.setMpNewsMediaId("52R6dL2FxDpM9N1rCY3sYBqHwq-L7K_lz1sPI71idMg");
@@ -44,7 +44,7 @@ public class WxMpKefuServiceImplTest {
   public void testSendKefuMessage() throws WxErrorException {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
-    WxMpKefuMessage message = new WxMpKefuMessage();
+    WxMaKefuMessage message = new WxMaKefuMessage();
     message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
     message.setToUser(configStorage.getOpenid());
     message.setContent(
@@ -56,7 +56,7 @@ public class WxMpKefuServiceImplTest {
   public void testSendKefuMessageWithKfAccount() throws WxErrorException {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
-    WxMpKefuMessage message = new WxMpKefuMessage();
+    WxMaKefuMessage message = new WxMaKefuMessage();
     message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
     message.setToUser(configStorage.getOpenid());
     message.setKfAccount(configStorage.getKfAccount());

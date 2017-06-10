@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   protected volatile MsgType msgType;
+  protected volatile String appid;
   protected volatile String secret;
   protected volatile String token;
   protected volatile String accessToken;
@@ -29,11 +30,7 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   protected volatile String httpProxyUsername;
   protected volatile String httpProxyPassword;
 
-  protected volatile String jsapiTicket;
-  protected volatile long jsapiTicketExpiresTime;
-
   protected Lock accessTokenLock = new ReentrantLock();
-  protected Lock jsapiTicketLock = new ReentrantLock();
 
   /**
    * 临时文件目录
@@ -41,6 +38,10 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   protected volatile File tmpDirFile;
 
   protected volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
+
+  public void setAccessTokenLock(Lock accessTokenLock) {
+    this.accessTokenLock = accessTokenLock;
+  }
 
   @Override
   public String getAccessToken() {
@@ -75,37 +76,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   @Override
   public void expireAccessToken() {
     this.expiresTime = 0;
-  }
-
-  @Override
-  public String getJsapiTicket() {
-    return this.jsapiTicket;
-  }
-
-  public void setJsapiTicket(String jsapiTicket) {
-    this.jsapiTicket = jsapiTicket;
-  }
-
-  @Override
-  public Lock getJsapiTicketLock() {
-    return this.jsapiTicketLock;
-  }
-
-  @Override
-  public boolean isJsapiTicketExpired() {
-    return System.currentTimeMillis() > this.jsapiTicketExpiresTime;
-  }
-
-  @Override
-  public synchronized void updateJsapiTicket(String jsapiTicket, int expiresInSeconds) {
-    this.jsapiTicket = jsapiTicket;
-    // 预留200秒的时间
-    this.jsapiTicketExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
-  }
-
-  @Override
-  public void expireJsapiTicket() {
-    this.jsapiTicketExpiresTime = 0;
   }
 
   @Override
@@ -217,17 +187,20 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     this.apacheHttpClientBuilder = apacheHttpClientBuilder;
   }
 
-  public long getJsapiTicketExpiresTime() {
-    return this.jsapiTicketExpiresTime;
-  }
-
-  public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
-    this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
-  }
-
   @Override
   public boolean autoRefreshToken() {
     return true;
   }
 
+  public void setMsgType(MsgType msgType) {
+    this.msgType = msgType;
+  }
+
+  public String getAppid() {
+    return appid;
+  }
+
+  public void setAppid(String appid) {
+    this.appid = appid;
+  }
 }

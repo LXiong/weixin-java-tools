@@ -18,13 +18,13 @@ public interface WxMpMessageInterceptor {
    *
    * @param wxMessage
    * @param context        上下文，如果handler或interceptor之间有信息要传递，可以用这个
-   * @param wxMpService
+   * @param wxMaService
    * @param sessionManager
    * @return true代表OK，false代表不OK
    */
   boolean intercept(WxMaInMessage wxMessage,
                     Map<String, Object> context,
-                    WxMpService wxMpService,
+                    WxMaService wxMaService,
                     WxSessionManager sessionManager) throws WxErrorException;
 
 }

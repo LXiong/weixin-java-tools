@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.util.json;
 
 import cn.binarywang.wx.miniapp.bean.*;
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.material.*;
 import cn.binarywang.wx.miniapp.bean.result.*;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateIndustry;
@@ -15,7 +15,7 @@ public class WxMpGsonBuilder {
 
   static {
     INSTANCE.disableHtmlEscaping();
-    INSTANCE.registerTypeAdapter(WxMpKefuMessage.class, new WxMpKefuMessageGsonAdapter());
+    INSTANCE.registerTypeAdapter(WxMaKefuMessage.class, new WxMpKefuMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMassNews.class, new WxMpMassNewsGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMassTagMessage.class, new WxMpMassTagMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMassOpenIdsMessage.class, new WxMpMassOpenIdsMessageGsonAdapter());
