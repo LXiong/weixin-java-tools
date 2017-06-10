@@ -1,5 +1,4 @@
 <xml>
-  <appId>公众号appID</appId>
   <secret>公众号appsecret</secret>
   <token>公众号Token</token>
   <aesKey>公众号EncodingAESKey</aesKey>

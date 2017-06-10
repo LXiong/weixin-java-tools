@@ -6,7 +6,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamMediaIdConverter;
 
 @XStreamAlias("xml")
-public class WxMpXmlOutVoiceMessage extends WxMpXmlOutMessage {
+public class WxMaOutVoiceMessage extends WxMaOutMessage {
 
   /**
    *
@@ -16,7 +16,7 @@ public class WxMpXmlOutVoiceMessage extends WxMpXmlOutMessage {
   @XStreamConverter(value = XStreamMediaIdConverter.class)
   private String mediaId;
 
-  public WxMpXmlOutVoiceMessage() {
+  public WxMaOutVoiceMessage() {
     this.msgType = WxConsts.XML_MSG_VOICE;
   }
 

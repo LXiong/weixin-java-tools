@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.constant.MsgType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
@@ -58,13 +59,13 @@ public interface WxMpConfigStorage {
    */
   void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
-  String getAppId();
-
   String getSecret();
 
   String getToken();
 
   String getAesKey();
+
+  MsgType getMsgType();
 
   long getExpiresTime();
 

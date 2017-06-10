@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class WxMpXmlOutVideoMessageTest {
 
   public void test() {
-    WxMpXmlOutVideoMessage m = new WxMpXmlOutVideoMessage();
+    WxMaOutVideoMessage m = new WxMaOutVideoMessage();
     m.setMediaId("media_id");
     m.setTitle("title");
     m.setDescription("ddfff");
@@ -31,7 +31,7 @@ public class WxMpXmlOutVideoMessageTest {
   }
 
   public void testBuild() {
-    WxMpXmlOutVideoMessage m = WxMpXmlOutMessage.VIDEO()
+    WxMaOutVideoMessage m = WxMaOutMessage.VIDEO()
       .mediaId("media_id")
       .fromUser("fromUser")
       .toUser("toUser")

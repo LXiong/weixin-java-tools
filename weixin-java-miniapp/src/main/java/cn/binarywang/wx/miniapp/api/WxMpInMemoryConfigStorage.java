@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.constant.MsgType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
@@ -14,8 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author chanjarster
  */
 public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
-
-  protected volatile String appId;
+  protected volatile MsgType msgType;
   protected volatile String secret;
   protected volatile String token;
   protected volatile String accessToken;
@@ -32,12 +32,8 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   protected volatile String jsapiTicket;
   protected volatile long jsapiTicketExpiresTime;
 
-  protected volatile String cardApiTicket;
-  protected volatile long cardApiTicketExpiresTime;
-
   protected Lock accessTokenLock = new ReentrantLock();
   protected Lock jsapiTicketLock = new ReentrantLock();
-  protected Lock cardApiTicketLock = new ReentrantLock();
 
   /**
    * 临时文件目录
@@ -113,15 +109,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   }
 
   @Override
-  public String getAppId() {
-    return this.appId;
-  }
-
-  public void setAppId(String appId) {
-    this.appId = appId;
-  }
-
-  @Override
   public String getSecret() {
     return this.secret;
   }
@@ -151,6 +138,11 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   @Override
   public String getAesKey() {
     return this.aesKey;
+  }
+
+  @Override
+  public MsgType getMsgType() {
+    return this.msgType;
   }
 
   public void setAesKey(String aesKey) {
@@ -231,14 +223,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
     this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
-  }
-
-  public long getCardApiTicketExpiresTime() {
-    return this.cardApiTicketExpiresTime;
-  }
-
-  public void setCardApiTicketExpiresTime(long cardApiTicketExpiresTime) {
-    this.cardApiTicketExpiresTime = cardApiTicketExpiresTime;
   }
 
   @Override

@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class WxMpXmlOutVoiceMessageTest {
 
   public void test() {
-    WxMpXmlOutVoiceMessage m = new WxMpXmlOutVoiceMessage();
+    WxMaOutVoiceMessage m = new WxMaOutVoiceMessage();
     m.setMediaId("ddfefesfsdfef");
     m.setCreateTime(1122l);
     m.setFromUserName("from");
@@ -25,7 +25,7 @@ public class WxMpXmlOutVoiceMessageTest {
   }
 
   public void testBuild() {
-    WxMpXmlOutVoiceMessage m = WxMpXmlOutMessage.VOICE().mediaId("ddfefesfsdfef").fromUser("from").toUser("to").build();
+    WxMaOutVoiceMessage m = WxMaOutMessage.VOICE().mediaId("ddfefesfsdfef").fromUser("from").toUser("to").build();
     String expected = "<xml>"
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"

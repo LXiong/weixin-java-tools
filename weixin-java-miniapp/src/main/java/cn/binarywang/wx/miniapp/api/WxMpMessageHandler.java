@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 
@@ -21,9 +21,9 @@ public interface WxMpMessageHandler {
    * @param sessionManager
    * @return xml格式的消息，如果在异步规则里处理的话，可以返回null
    */
-  WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
-                           Map<String, Object> context,
-                           WxMpService wxMpService,
-                           WxSessionManager sessionManager) throws WxErrorException;
+  WxMaOutMessage handle(WxMaInMessage wxMessage,
+                        Map<String, Object> context,
+                        WxMpService wxMpService,
+                        WxSessionManager sessionManager) throws WxErrorException;
 
 }

@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -166,15 +166,13 @@ public class WxMpMessageRouterRule {
    * 将微信自定义的事件修正为不区分大小写,
    * 比如框架定义的事件常量为click，但微信传递过来的却是CLICK
    */
-  protected boolean test(WxMpXmlMessage wxMessage) {
+  protected boolean test(WxMaInMessage wxMessage) {
     return
       (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUser()))
         &&
         (this.msgType == null || this.msgType.toLowerCase().equals((wxMessage.getMsgType() == null ? null : wxMessage.getMsgType().toLowerCase())))
         &&
         (this.event == null || this.event.toLowerCase().equals((wxMessage.getEvent() == null ? null : wxMessage.getEvent().toLowerCase())))
-        &&
-        (this.eventKey == null || this.eventKey.toLowerCase().equals((wxMessage.getEventKey() == null ? null : wxMessage.getEventKey().toLowerCase())))
         &&
         (this.content == null || this.content
           .equals(wxMessage.getContent() == null ? null : wxMessage.getContent().trim()))
@@ -192,11 +190,11 @@ public class WxMpMessageRouterRule {
    * @param wxMessage
    * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
-  protected WxMpXmlOutMessage service(WxMpXmlMessage wxMessage,
-                                      Map<String, Object> context,
-                                      WxMpService wxMpService,
-                                      WxSessionManager sessionManager,
-                                      WxErrorExceptionHandler exceptionHandler) {
+  protected WxMaOutMessage service(WxMaInMessage wxMessage,
+                                   Map<String, Object> context,
+                                   WxMpService wxMpService,
+                                   WxSessionManager sessionManager,
+                                   WxErrorExceptionHandler exceptionHandler) {
 
     if (context == null) {
       context = new HashMap<>();
@@ -211,7 +209,7 @@ public class WxMpMessageRouterRule {
       }
 
       // 交给handler处理
-      WxMpXmlOutMessage res = null;
+      WxMaOutMessage res = null;
       for (WxMpMessageHandler handler : this.handlers) {
         // 返回最后handler的结果
         if (handler == null) {

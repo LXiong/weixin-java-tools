@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XStreamAlias("xml")
-public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
+public class WxMaOutNewsMessage extends WxMaOutMessage {
 
   /**
    *
@@ -20,7 +20,7 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
   @XStreamAlias("ArticleCount")
   protected int articleCount;
 
-  public WxMpXmlOutNewsMessage() {
+  public WxMaOutNewsMessage() {
     this.msgType = WxConsts.XML_MSG_NEWS;
   }
 

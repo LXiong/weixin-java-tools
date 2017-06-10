@@ -63,8 +63,7 @@ public class WxMpServiceJoddHttpImpl extends AbstractWxMpServiceImpl<HttpConnect
       }
 
       if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
+        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getSecret());
 
         HttpRequest request = HttpRequest.get(url);
 

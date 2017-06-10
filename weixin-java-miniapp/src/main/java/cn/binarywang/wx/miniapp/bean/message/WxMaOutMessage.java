@@ -3,7 +3,9 @@ package cn.binarywang.wx.miniapp.bean.message;
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
 import cn.binarywang.wx.miniapp.builder.outxml.*;
 import cn.binarywang.wx.miniapp.util.crypto.WxMpCryptUtil;
+import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
 import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
+import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
@@ -11,21 +13,24 @@ import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import java.io.Serializable;
 
 @XStreamAlias("xml")
-public abstract class WxMpXmlOutMessage implements Serializable {
-
+public abstract class WxMaOutMessage implements Serializable {
   private static final long serialVersionUID = -381382011286216263L;
 
+  @SerializedName("ToUserName")
   @XStreamAlias("ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
+  @SerializedName("FromUserName")
   @XStreamAlias("FromUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String fromUserName;
 
+  @SerializedName("CreateTime")
   @XStreamAlias("CreateTime")
   protected Long createTime;
 
+  @SerializedName("MsgType")
   @XStreamAlias("MsgType")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgType;
@@ -113,7 +118,7 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   @SuppressWarnings("unchecked")
   public String toXml() {
-    return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
+    return XStreamTransformer.toXml((Class<WxMaOutMessage>) this.getClass(), this);
   }
 
   /**
@@ -123,5 +128,11 @@ public abstract class WxMpXmlOutMessage implements Serializable {
     String plainXml = toXml();
     WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
     return pc.encrypt(plainXml);
+  }
+  /**
+   * 转换成加密的json格式
+   */
+  public String toEncryptedJson(WxMpConfigStorage wxMpConfigStorage) {
+    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
   }
 }

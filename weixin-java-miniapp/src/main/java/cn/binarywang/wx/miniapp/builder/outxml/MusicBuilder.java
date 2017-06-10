@@ -1,13 +1,13 @@
 package cn.binarywang.wx.miniapp.builder.outxml;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMusicMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMusicMessage;
 
 /**
  * 音乐消息builder
  *
  * @author chanjarster
  */
-public final class MusicBuilder extends BaseBuilder<MusicBuilder, WxMpXmlOutMusicMessage> {
+public final class MusicBuilder extends BaseBuilder<MusicBuilder, WxMaOutMusicMessage> {
 
   private String title;
   private String description;
@@ -41,8 +41,8 @@ public final class MusicBuilder extends BaseBuilder<MusicBuilder, WxMpXmlOutMusi
   }
 
   @Override
-  public WxMpXmlOutMusicMessage build() {
-    WxMpXmlOutMusicMessage m = new WxMpXmlOutMusicMessage();
+  public WxMaOutMusicMessage build() {
+    WxMaOutMusicMessage m = new WxMaOutMusicMessage();
     setCommon(m);
     m.setTitle(this.title);
     m.setDescription(this.description);

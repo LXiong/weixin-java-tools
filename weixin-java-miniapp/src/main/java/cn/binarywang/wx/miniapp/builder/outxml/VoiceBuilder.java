@@ -1,13 +1,13 @@
 package cn.binarywang.wx.miniapp.builder.outxml;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutVoiceMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutVoiceMessage;
 
 /**
  * 语音消息builder
  *
  * @author chanjarster
  */
-public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxMpXmlOutVoiceMessage> {
+public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxMaOutVoiceMessage> {
 
   private String mediaId;
 
@@ -17,8 +17,8 @@ public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxMpXmlOutVoic
   }
 
   @Override
-  public WxMpXmlOutVoiceMessage build() {
-    WxMpXmlOutVoiceMessage m = new WxMpXmlOutVoiceMessage();
+  public WxMaOutVoiceMessage build() {
+    WxMaOutVoiceMessage m = new WxMaOutVoiceMessage();
     setCommon(m);
     m.setMediaId(this.mediaId);
     return m;

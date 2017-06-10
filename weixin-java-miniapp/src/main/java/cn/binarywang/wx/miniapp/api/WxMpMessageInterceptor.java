@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 
@@ -22,7 +22,7 @@ public interface WxMpMessageInterceptor {
    * @param sessionManager
    * @return true代表OK，false代表不OK
    */
-  boolean intercept(WxMpXmlMessage wxMessage,
+  boolean intercept(WxMaInMessage wxMessage,
                     Map<String, Object> context,
                     WxMpService wxMpService,
                     WxSessionManager sessionManager) throws WxErrorException;

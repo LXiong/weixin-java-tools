@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class WxMpXmlOutTransferKefuMessageTest {
   @Test
   public void test() {
-    WxMpXmlOutTransferKefuMessage m = new WxMpXmlOutTransferKefuMessage();
+    WxMaOutTransferKefuMessage m = new WxMaOutTransferKefuMessage();
     m.setCreateTime(1399197672L);
     m.setFromUserName("fromuser");
     m.setToUserName("touser");
@@ -32,7 +32,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
       "<KfAccount><![CDATA[test1@test]]></KfAccount>" +
       "</TransInfo>" +
       "</xml>";
-    WxMpXmlOutTransferKefuMessage.TransInfo transInfo = new WxMpXmlOutTransferKefuMessage.TransInfo();
+    WxMaOutTransferKefuMessage.TransInfo transInfo = new WxMaOutTransferKefuMessage.TransInfo();
     transInfo.setKfAccount("test1@test");
     m.setTransInfo(transInfo);
     System.out.println(m.toXml());
@@ -41,7 +41,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
 
   @Test
   public void testBuild() {
-    WxMpXmlOutTransferKefuMessage m = WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().fromUser("fromuser").toUser("touser").build();
+    WxMaOutTransferKefuMessage m = WxMaOutMessage.TRANSFER_CUSTOMER_SERVICE().fromUser("fromuser").toUser("touser").build();
     m.setCreateTime(1399197672L);
     String expected = "<xml>" +
       "<ToUserName><![CDATA[touser]]></ToUserName>" +
@@ -62,7 +62,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
       "<KfAccount><![CDATA[test1@test]]></KfAccount>" +
       "</TransInfo>" +
       "</xml>";
-    m = WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().kfAccount("test1@test").fromUser("fromuser").toUser("touser").build();
+    m = WxMaOutMessage.TRANSFER_CUSTOMER_SERVICE().kfAccount("test1@test").fromUser("fromuser").toUser("touser").build();
     m.setCreateTime(1399197672L);
     System.out.println(m.toXml());
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));

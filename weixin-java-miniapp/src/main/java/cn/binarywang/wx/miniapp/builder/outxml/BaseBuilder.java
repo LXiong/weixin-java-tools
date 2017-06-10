@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.builder.outxml;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 
 public abstract class BaseBuilder<BuilderType, ValueType> {
 
@@ -22,7 +22,7 @@ public abstract class BaseBuilder<BuilderType, ValueType> {
 
   public abstract ValueType build();
 
-  public void setCommon(WxMpXmlOutMessage m) {
+  public void setCommon(WxMaOutMessage m) {
     m.setToUserName(this.toUserName);
     m.setFromUserName(this.fromUserName);
     m.setCreateTime(System.currentTimeMillis() / 1000l);

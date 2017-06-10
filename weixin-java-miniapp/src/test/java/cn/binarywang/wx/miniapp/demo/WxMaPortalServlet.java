@@ -3,27 +3,27 @@ package cn.binarywang.wx.miniapp.demo;
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
 import cn.binarywang.wx.miniapp.api.WxMpMessageRouter;
 import cn.binarywang.wx.miniapp.api.WxMpService;
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
+import cn.binarywang.wx.miniapp.constant.MsgType;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-/**
- * @author Daniel Qian
- */
-public class WxMpEndpointServlet extends HttpServlet {
+public class WxMaPortalServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   protected WxMpConfigStorage wxMpConfigStorage;
   protected WxMpService wxMpService;
   protected WxMpMessageRouter wxMpMessageRouter;
 
-  public WxMpEndpointServlet(WxMpConfigStorage wxMpConfigStorage, WxMpService wxMpService,
-                             WxMpMessageRouter wxMpMessageRouter) {
+  public WxMaPortalServlet(WxMpConfigStorage wxMpConfigStorage, WxMpService wxMpService,
+                           WxMpMessageRouter wxMpMessageRouter) {
     this.wxMpConfigStorage = wxMpConfigStorage;
     this.wxMpService = wxMpService;
     this.wxMpMessageRouter = wxMpMessageRouter;
@@ -32,7 +32,6 @@ public class WxMpEndpointServlet extends HttpServlet {
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
     throws IOException {
-
     response.setContentType("text/html;charset=utf-8");
     response.setStatus(HttpServletResponse.SC_OK);
 
@@ -53,14 +52,19 @@ public class WxMpEndpointServlet extends HttpServlet {
       return;
     }
 
-    String encryptType = StringUtils.isBlank(request.getParameter("encrypt_type")) ?
-      "raw" :
-      request.getParameter("encrypt_type");
-
-    if ("raw".equals(encryptType)) {
+    String encryptType = request.getParameter("encrypt_type");
+    final boolean isJson = this.wxMpConfigStorage.getMsgType() == MsgType.JSON;
+    if (StringUtils.isBlank(encryptType)) {
       // 明文传输的消息
-      WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(request.getInputStream());
-      WxMpXmlOutMessage outMessage = this.wxMpMessageRouter.route(inMessage);
+      WxMaInMessage inMessage;
+      if (isJson) {
+        inMessage = WxMaInMessage.fromJson(IOUtils.toString(request.getInputStream(),
+          StandardCharsets.UTF_8));
+      } else {//xml
+        inMessage = WxMaInMessage.fromXml(request.getInputStream());
+      }
+
+      WxMaOutMessage outMessage = this.wxMpMessageRouter.route(inMessage);
       if (outMessage != null) {
         response.getWriter().write(outMessage.toXml());
       }
@@ -70,9 +74,26 @@ public class WxMpEndpointServlet extends HttpServlet {
     if ("aes".equals(encryptType)) {
       // 是aes加密的消息
       String msgSignature = request.getParameter("msg_signature");
-      WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), this.wxMpConfigStorage, timestamp, nonce, msgSignature);
-      WxMpXmlOutMessage outMessage = this.wxMpMessageRouter.route(inMessage);
-      response.getWriter().write(outMessage.toEncryptedXml(this.wxMpConfigStorage));
+      WxMaInMessage inMessage;
+      if (isJson) {
+        inMessage = WxMaInMessage.fromEncryptedJson(request.getInputStream(),
+          this.wxMpConfigStorage, timestamp, nonce, msgSignature);
+      } else {//xml
+        inMessage = WxMaInMessage.fromEncryptedXml(request.getInputStream(),
+          this.wxMpConfigStorage, timestamp, nonce, msgSignature);
+      }
+      WxMaOutMessage outMessage = this.wxMpMessageRouter.route(inMessage);
+      String out;
+      if (outMessage == null) {
+        out = "success";
+      } else if (isJson) {
+        out = outMessage.toEncryptedJson(this.wxMpConfigStorage);
+      } else {
+        out = outMessage.toEncryptedXml(this.wxMpConfigStorage);
+      }
+
+      this.log(out);
+      response.getWriter().write(out);
       return;
     }
 

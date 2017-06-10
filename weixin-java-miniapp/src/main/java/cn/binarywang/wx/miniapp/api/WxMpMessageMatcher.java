@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
 
 /**
  * 消息匹配器，用在消息路由的时候
@@ -12,6 +12,6 @@ public interface WxMpMessageMatcher {
    *
    * @param message
    */
-  boolean match(WxMpXmlMessage message);
+  boolean match(WxMaInMessage message);
 
 }

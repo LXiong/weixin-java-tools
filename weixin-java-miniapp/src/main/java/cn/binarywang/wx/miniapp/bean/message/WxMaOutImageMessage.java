@@ -6,17 +6,14 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamMediaIdConverter;
 
 @XStreamAlias("xml")
-public class WxMpXmlOutImageMessage extends WxMpXmlOutMessage {
-
-  /**
-   *
-   */
+public class WxMaOutImageMessage extends WxMaOutMessage {
   private static final long serialVersionUID = -2684778597067990723L;
+
   @XStreamAlias("Image")
   @XStreamConverter(value = XStreamMediaIdConverter.class)
   private String mediaId;
 
-  public WxMpXmlOutImageMessage() {
+  public WxMaOutImageMessage() {
     this.msgType = WxConsts.XML_MSG_IMAGE;
   }
 

@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class WxMpXmlOutTextMessageTest {
 
   public void test() {
-    WxMpXmlOutTextMessage m = new WxMpXmlOutTextMessage();
+    WxMaOutTextMessage m = new WxMaOutTextMessage();
     m.setContent("content");
     m.setCreateTime(1122l);
     m.setFromUserName("from");
@@ -25,7 +25,7 @@ public class WxMpXmlOutTextMessageTest {
   }
 
   public void testBuild() {
-    WxMpXmlOutTextMessage m = WxMpXmlOutMessage.TEXT().content("content").fromUser("from").toUser("to").build();
+    WxMaOutTextMessage m = WxMaOutMessage.TEXT().content("content").fromUser("from").toUser("to").build();
     String expected = "<xml>"
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"

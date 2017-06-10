@@ -78,7 +78,7 @@ public class WxMpServiceApacheHttpClientImpl extends AbstractWxMpServiceImpl<Clo
 
       if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
         String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
+            this.getWxMpConfigStorage().getSecret());
         try {
           HttpGet httpGet = new HttpGet(url);
           if (this.getRequestHttpProxy() != null) {

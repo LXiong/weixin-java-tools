@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -128,12 +128,7 @@ public class WxMpMessageRouter {
   /**
    * 处理微信消息
    */
-  public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
-    if (isMsgDuplicated(wxMessage)) {
-      // 如果是重复消息，那么就不做处理
-      return null;
-    }
-
+  public WxMaOutMessage route(final WxMaInMessage wxMessage, final Map<String, Object> context) {
     final List<WxMpMessageRouterRule> matchRules = new ArrayList<>();
     // 收集匹配的规则
     for (final WxMpMessageRouterRule rule : this.rules) {
@@ -149,7 +144,7 @@ public class WxMpMessageRouter {
       return null;
     }
 
-    WxMpXmlOutMessage res = null;
+    WxMaOutMessage res = null;
     final List<Future<?>> futures = new ArrayList<>();
     for (final WxMpMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
@@ -190,31 +185,14 @@ public class WxMpMessageRouter {
     return res;
   }
 
-  public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage) {
+  public WxMaOutMessage route(final WxMaInMessage wxMessage) {
     return this.route(wxMessage, new HashMap<String, Object>());
-  }
-
-  protected boolean isMsgDuplicated(WxMpXmlMessage wxMessage) {
-
-    StringBuilder messageId = new StringBuilder();
-    if (wxMessage.getMsgId() == null) {
-      messageId.append(wxMessage.getCreateTime())
-        .append("-").append(wxMessage.getFromUser())
-        .append("-").append(wxMessage.getEventKey() == null ? "" : wxMessage.getEventKey())
-        .append("-").append(wxMessage.getEvent() == null ? "" : wxMessage.getEvent())
-      ;
-    } else {
-      messageId.append(wxMessage.getMsgId());
-    }
-
-    return this.messageDuplicateChecker.isDuplicate(messageId.toString());
-
   }
 
   /**
    * 对session的访问结束
    */
-  protected void sessionEndAccess(WxMpXmlMessage wxMessage) {
+  protected void sessionEndAccess(WxMaInMessage wxMessage) {
 
     InternalSession session = ((InternalSessionManager) this.sessionManager).findSession(wxMessage.getFromUser());
     if (session != null) {

@@ -43,8 +43,7 @@ public class WxMpServiceOkHttpImpl extends AbstractWxMpServiceImpl<ConnectionPoo
       }
 
       if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
+        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,this.getWxMpConfigStorage().getSecret());
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(httpClient);
         //设置代理

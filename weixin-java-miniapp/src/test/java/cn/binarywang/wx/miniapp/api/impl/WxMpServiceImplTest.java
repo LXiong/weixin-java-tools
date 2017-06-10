@@ -97,45 +97,6 @@ public class WxMpServiceImplTest {
   }
 
   @Test
-  public void testOauth2buildAuthorizationUrl() {
-    Assert.fail("Not yet implemented");
-  }
-
-  @Test
-  public void testBuildQrConnectUrl() {
-    String qrconnectRedirectUrl = ((TestConfigStorage) this.wxService.getWxMpConfigStorage()).getQrconnectRedirectUrl();
-    String qrConnectUrl = this.wxService.buildQrConnectUrl(qrconnectRedirectUrl,
-      WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, null);
-    Assert.assertNotNull(qrConnectUrl);
-    System.out.println(qrConnectUrl);
-  }
-
-  @Test
-  public void testOauth2getAccessToken() {
-    Assert.fail("Not yet implemented");
-  }
-
-  @Test
-  public void testOauth2refreshAccessToken() {
-    Assert.fail("Not yet implemented");
-  }
-
-  @Test
-  public void testOauth2getUserInfo() {
-    Assert.fail("Not yet implemented");
-  }
-
-  @Test
-  public void testOauth2validateAccessToken() {
-    Assert.fail("Not yet implemented");
-  }
-
-  @Test
-  public void testGetCallbackIP() {
-    Assert.fail("Not yet implemented");
-  }
-
-  @Test
   public void testGet() {
     Assert.fail("Not yet implemented");
   }

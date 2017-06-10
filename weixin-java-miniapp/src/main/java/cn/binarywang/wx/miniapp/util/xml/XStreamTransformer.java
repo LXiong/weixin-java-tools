@@ -11,14 +11,14 @@ public class XStreamTransformer {
   private static final Map<Class<?>, XStream> CLASS_2_XSTREAM_INSTANCE = new HashMap<>();
 
   static {
-    registerClass(WxMpXmlMessage.class);
-    registerClass(WxMpXmlOutMusicMessage.class);
-    registerClass(WxMpXmlOutNewsMessage.class);
-    registerClass(WxMpXmlOutTextMessage.class);
-    registerClass(WxMpXmlOutImageMessage.class);
-    registerClass(WxMpXmlOutVideoMessage.class);
-    registerClass(WxMpXmlOutVoiceMessage.class);
-    registerClass(WxMpXmlOutTransferKefuMessage.class);
+    registerClass(WxMaInMessage.class);
+    registerClass(WxMaOutMusicMessage.class);
+    registerClass(WxMaOutNewsMessage.class);
+    registerClass(WxMaOutTextMessage.class);
+    registerClass(WxMaOutImageMessage.class);
+    registerClass(WxMaOutVideoMessage.class);
+    registerClass(WxMaOutVoiceMessage.class);
+    registerClass(WxMaOutTransferKefuMessage.class);
   }
 
   /**
@@ -62,9 +62,9 @@ public class XStreamTransformer {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(clz);
     xstream.processAnnotations(getInnerClasses(clz));
-    if (clz.equals(WxMpXmlMessage.class)) {
+    if (clz.equals(WxMaInMessage.class)) {
       // 操蛋的微信，模板消息推送成功的消息是MsgID，其他消息推送过来是MsgId
-      xstream.aliasField("MsgID", WxMpXmlMessage.class, "msgId");
+      xstream.aliasField("MsgID", WxMaInMessage.class, "msgId");
     }
 
     register(clz, xstream);

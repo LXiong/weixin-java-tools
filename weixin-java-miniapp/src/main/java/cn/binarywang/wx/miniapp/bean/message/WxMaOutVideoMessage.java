@@ -6,7 +6,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 @XStreamAlias("xml")
-public class WxMpXmlOutVideoMessage extends WxMpXmlOutMessage {
+public class WxMaOutVideoMessage extends WxMaOutMessage {
 
   /**
    *
@@ -15,7 +15,7 @@ public class WxMpXmlOutVideoMessage extends WxMpXmlOutMessage {
   @XStreamAlias("Video")
   protected final Video video = new Video();
 
-  public WxMpXmlOutVideoMessage() {
+  public WxMaOutVideoMessage() {
     this.msgType = WxConsts.XML_MSG_VIDEO;
   }
 

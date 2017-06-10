@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class WxMpXmlOutMusicMessageTest {
 
   public void test() {
-    WxMpXmlOutMusicMessage m = new WxMpXmlOutMusicMessage();
+    WxMaOutMusicMessage m = new WxMaOutMusicMessage();
     m.setTitle("title");
     m.setDescription("ddfff");
     m.setHqMusicUrl("hQMusicUrl");
@@ -35,7 +35,7 @@ public class WxMpXmlOutMusicMessageTest {
   }
 
   public void testBuild() {
-    WxMpXmlOutMusicMessage m = WxMpXmlOutMessage.MUSIC()
+    WxMaOutMusicMessage m = WxMaOutMessage.MUSIC()
       .fromUser("fromUser")
       .toUser("toUser")
       .title("title")

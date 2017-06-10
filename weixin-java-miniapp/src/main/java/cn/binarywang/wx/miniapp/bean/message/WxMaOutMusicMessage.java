@@ -6,7 +6,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 @XStreamAlias("xml")
-public class WxMpXmlOutMusicMessage extends WxMpXmlOutMessage {
+public class WxMaOutMusicMessage extends WxMaOutMessage {
 
   /**
    *
@@ -15,7 +15,7 @@ public class WxMpXmlOutMusicMessage extends WxMpXmlOutMessage {
   @XStreamAlias("Music")
   protected final Music music = new Music();
 
-  public WxMpXmlOutMusicMessage() {
+  public WxMaOutMusicMessage() {
     this.msgType = WxConsts.XML_MSG_MUSIC;
   }
 

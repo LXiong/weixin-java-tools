@@ -1,13 +1,13 @@
 package cn.binarywang.wx.miniapp.builder.outxml;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutVideoMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutVideoMessage;
 
 /**
  * 视频消息builder
  *
  * @author chanjarster
  */
-public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxMpXmlOutVideoMessage> {
+public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxMaOutVideoMessage> {
 
   private String mediaId;
   private String title;
@@ -29,8 +29,8 @@ public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxMpXmlOutVide
   }
 
   @Override
-  public WxMpXmlOutVideoMessage build() {
-    WxMpXmlOutVideoMessage m = new WxMpXmlOutVideoMessage();
+  public WxMaOutVideoMessage build() {
+    WxMaOutVideoMessage m = new WxMaOutVideoMessage();
     setCommon(m);
     m.setTitle(this.title);
     m.setDescription(this.description);

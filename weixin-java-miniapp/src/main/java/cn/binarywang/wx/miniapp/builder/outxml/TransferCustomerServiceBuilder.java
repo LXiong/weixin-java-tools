@@ -1,17 +1,17 @@
 package cn.binarywang.wx.miniapp.builder.outxml;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutTransferKefuMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutTransferKefuMessage;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * 客服消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
+ * 用法: WxMpKefuMessage m = WxMaOutMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
  * </pre>
  *
  * @author chanjarster
  */
-public final class TransferCustomerServiceBuilder extends BaseBuilder<TransferCustomerServiceBuilder, WxMpXmlOutTransferKefuMessage> {
+public final class TransferCustomerServiceBuilder extends BaseBuilder<TransferCustomerServiceBuilder, WxMaOutTransferKefuMessage> {
   private String kfAccount;
 
   public TransferCustomerServiceBuilder kfAccount(String kf) {
@@ -20,11 +20,11 @@ public final class TransferCustomerServiceBuilder extends BaseBuilder<TransferCu
   }
 
   @Override
-  public WxMpXmlOutTransferKefuMessage build() {
-    WxMpXmlOutTransferKefuMessage m = new WxMpXmlOutTransferKefuMessage();
+  public WxMaOutTransferKefuMessage build() {
+    WxMaOutTransferKefuMessage m = new WxMaOutTransferKefuMessage();
     setCommon(m);
     if (StringUtils.isNotBlank(this.kfAccount)) {
-      WxMpXmlOutTransferKefuMessage.TransInfo transInfo = new WxMpXmlOutTransferKefuMessage.TransInfo();
+      WxMaOutTransferKefuMessage.TransInfo transInfo = new WxMaOutTransferKefuMessage.TransInfo();
       transInfo.setKfAccount(this.kfAccount);
       m.setTransInfo(transInfo);
     }

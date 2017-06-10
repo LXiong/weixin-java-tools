@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMpXmlOutMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
+import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -42,17 +42,11 @@ public class WxMpMessageRouterTest {
       .rule().async(async).eventKey("KEY_1").handler(new WxEchoMpMessageHandler(sb, "KEY_1")).end()
       .rule().async(async).content("CONTENT_1").handler(new WxEchoMpMessageHandler(sb, "CONTENT_1")).end()
       .rule().async(async).rContent(".*bc.*").handler(new WxEchoMpMessageHandler(sb, "abcd")).end()
-      .rule().async(async).matcher(new WxMpMessageMatcher() {
-      @Override
-      public boolean match(WxMpXmlMessage message) {
-        return "strangeformat".equals(message.getFormat());
-      }
-    }).handler(new WxEchoMpMessageHandler(sb, "matcher")).end()
       .rule().async(async).handler(new WxEchoMpMessageHandler(sb, "ALL")).end();
   }
 
   @Test(dataProvider = "messages-1")
-  public void testSync(WxMpXmlMessage message, String expected) {
+  public void testSync(WxMaInMessage message, String expected) {
     StringBuffer sb = new StringBuffer();
     WxMpMessageRouter router = new WxMpMessageRouter(null);
     prepare(false, sb, router);
@@ -61,7 +55,7 @@ public class WxMpMessageRouterTest {
   }
 
   @Test(dataProvider = "messages-1")
-  public void testAsync(WxMpXmlMessage message, String expected) throws InterruptedException {
+  public void testAsync(WxMaInMessage message, String expected) throws InterruptedException {
     StringBuffer sb = new StringBuffer();
     WxMpMessageRouter router = new WxMpMessageRouter(null);
     prepare(true, sb, router);
@@ -74,13 +68,13 @@ public class WxMpMessageRouterTest {
     final WxMpMessageRouter router = new WxMpMessageRouter(null);
     router.rule().handler(new WxMpMessageHandler() {
       @Override
-      public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-                                      WxSessionManager sessionManager) {
+      public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+                                   WxSessionManager sessionManager) {
         return null;
       }
     }).end();
 
-    final WxMpXmlMessage m = new WxMpXmlMessage();
+    final WxMaInMessage m = new WxMaInMessage();
     Runnable r = new Runnable() {
       @Override
       public void run() {
@@ -100,50 +94,40 @@ public class WxMpMessageRouterTest {
 
   @DataProvider(name = "messages-1")
   public Object[][] messages2() {
-    WxMpXmlMessage message1 = new WxMpXmlMessage();
+    WxMaInMessage message1 = new WxMaInMessage();
     message1.setMsgType(WxConsts.XML_MSG_TEXT);
 
-    WxMpXmlMessage message2 = new WxMpXmlMessage();
+    WxMaInMessage message2 = new WxMaInMessage();
     message2.setEvent(WxConsts.EVT_CLICK);
 
-    WxMpXmlMessage message3 = new WxMpXmlMessage();
-    message3.setEventKey("KEY_1");
-
-    WxMpXmlMessage message4 = new WxMpXmlMessage();
+    WxMaInMessage message4 = new WxMaInMessage();
     message4.setContent("CONTENT_1");
 
-    WxMpXmlMessage message5 = new WxMpXmlMessage();
+    WxMaInMessage message5 = new WxMaInMessage();
     message5.setContent("BLA");
 
-    WxMpXmlMessage message6 = new WxMpXmlMessage();
+    WxMaInMessage message6 = new WxMaInMessage();
     message6.setContent("abcd");
 
-    WxMpXmlMessage message7 = new WxMpXmlMessage();
-    message7.setFormat("strangeformat");
-
-    WxMpXmlMessage c2 = new WxMpXmlMessage();
+    WxMaInMessage c2 = new WxMaInMessage();
     c2.setMsgType(WxConsts.XML_MSG_TEXT);
     c2.setEvent(WxConsts.EVT_CLICK);
 
-    WxMpXmlMessage c3 = new WxMpXmlMessage();
+    WxMaInMessage c3 = new WxMaInMessage();
     c3.setMsgType(WxConsts.XML_MSG_TEXT);
     c3.setEvent(WxConsts.EVT_CLICK);
-    c3.setEventKey("KEY_1");
 
-    WxMpXmlMessage c4 = new WxMpXmlMessage();
+    WxMaInMessage c4 = new WxMaInMessage();
     c4.setMsgType(WxConsts.XML_MSG_TEXT);
     c4.setEvent(WxConsts.EVT_CLICK);
-    c4.setEventKey("KEY_1");
     c4.setContent("CONTENT_1");
 
     return new Object[][]{
       new Object[]{message1, WxConsts.XML_MSG_TEXT + ","},
       new Object[]{message2, WxConsts.EVT_CLICK + ","},
-      new Object[]{message3, "KEY_1,"},
       new Object[]{message4, "CONTENT_1,"},
       new Object[]{message5, "ALL,"},
       new Object[]{message6, "abcd,"},
-      new Object[]{message7, "matcher,"},
       new Object[]{c2, "COMBINE_2,"},
       new Object[]{c3, "COMBINE_3,"},
       new Object[]{c4, "COMBINE_4,"}
@@ -176,7 +160,7 @@ public class WxMpMessageRouterTest {
       .rule().async(false).handler(new WxSessionMessageHandler()).next()
       .rule().async(false).handler(new WxSessionMessageHandler()).end();
 
-    WxMpXmlMessage msg = new WxMpXmlMessage();
+    WxMaInMessage msg = new WxMaInMessage();
     msg.setFromUser("abc");
     router.route(msg);
 
@@ -196,7 +180,7 @@ public class WxMpMessageRouterTest {
         .rule().async(false).handler(new WxSessionMessageHandler()).next()
         .rule().async(true).handler(new WxSessionMessageHandler()).end();
 
-      WxMpXmlMessage msg = new WxMpXmlMessage();
+      WxMaInMessage msg = new WxMaInMessage();
       msg.setFromUser("abc");
       router.route(msg);
 
@@ -210,7 +194,7 @@ public class WxMpMessageRouterTest {
         .rule().async(true).handler(new WxSessionMessageHandler()).next()
         .rule().async(false).handler(new WxSessionMessageHandler()).end();
 
-      WxMpXmlMessage msg = new WxMpXmlMessage();
+      WxMaInMessage msg = new WxMaInMessage();
       msg.setFromUser("abc");
       router.route(msg);
 
@@ -230,7 +214,7 @@ public class WxMpMessageRouterTest {
       .rule().async(true).handler(new WxSessionMessageHandler()).next()
       .rule().async(true).handler(new WxSessionMessageHandler()).end();
 
-    WxMpXmlMessage msg = new WxMpXmlMessage();
+    WxMaInMessage msg = new WxMaInMessage();
     msg.setFromUser("abc");
     router.route(msg);
 
@@ -249,7 +233,7 @@ public class WxMpMessageRouterTest {
       router
         .rule().async(false).handler(new WxSessionMessageHandler()).end();
 
-      WxMpXmlMessage msg = new WxMpXmlMessage();
+      WxMaInMessage msg = new WxMaInMessage();
       msg.setFromUser("abc");
       router.route(msg);
 
@@ -263,7 +247,7 @@ public class WxMpMessageRouterTest {
       router
         .rule().async(true).handler(new WxSessionMessageHandler()).end();
 
-      WxMpXmlMessage msg = new WxMpXmlMessage();
+      WxMaInMessage msg = new WxMaInMessage();
       msg.setFromUser("abc");
       router.route(msg);
 
@@ -283,8 +267,8 @@ public class WxMpMessageRouterTest {
     }
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-                                    WxSessionManager sessionManager) {
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+                                 WxSessionManager sessionManager) {
       this.sb.append(this.echoStr).append(',');
       return null;
     }
@@ -294,8 +278,8 @@ public class WxMpMessageRouterTest {
   public static class WxSessionMessageHandler implements WxMpMessageHandler {
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-                                    WxSessionManager sessionManager) {
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+                                 WxSessionManager sessionManager) {
       sessionManager.getSession(wxMessage.getFromUser());
       return null;
     }
