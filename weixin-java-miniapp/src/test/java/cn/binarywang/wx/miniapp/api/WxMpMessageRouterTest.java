@@ -68,7 +68,7 @@ public class WxMpMessageRouterTest {
     final WxMpMessageRouter router = new WxMpMessageRouter(null);
     router.rule().handler(new WxMpMessageHandler() {
       @Override
-      public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+      public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMaService wxMaService,
                                    WxSessionManager sessionManager) {
         return null;
       }
@@ -267,7 +267,7 @@ public class WxMpMessageRouterTest {
     }
 
     @Override
-    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMaService wxMaService,
                                  WxSessionManager sessionManager) {
       this.sb.append(this.echoStr).append(',');
       return null;
@@ -278,7 +278,7 @@ public class WxMpMessageRouterTest {
   public static class WxSessionMessageHandler implements WxMpMessageHandler {
 
     @Override
-    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMaService wxMaService,
                                  WxSessionManager sessionManager) {
       sessionManager.getSession(wxMessage.getFromUser());
       return null;

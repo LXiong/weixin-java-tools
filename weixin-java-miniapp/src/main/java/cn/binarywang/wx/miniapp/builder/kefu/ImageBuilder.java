@@ -1,12 +1,12 @@
 package cn.binarywang.wx.miniapp.builder.kefu;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 
 /**
  * 获得消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpKefuMessage.IMAGE().mediaId(...).toUser(...).build();
+ * 用法: WxMaKefuMessage m = WxMaKefuMessage.IMAGE().mediaId(...).toUser(...).build();
  * </pre>
  *
  * @author chanjarster
@@ -24,8 +24,8 @@ public final class ImageBuilder extends BaseBuilder<ImageBuilder> {
   }
 
   @Override
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = super.build();
+  public WxMaKefuMessage build() {
+    WxMaKefuMessage m = super.build();
     m.setMediaId(this.mediaId);
     return m;
   }

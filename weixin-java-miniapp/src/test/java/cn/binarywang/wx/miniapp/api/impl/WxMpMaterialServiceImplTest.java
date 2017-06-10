@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.api.test.TestConstants;
 import cn.binarywang.wx.miniapp.bean.material.*;
@@ -31,7 +31,7 @@ import static org.testng.Assert.*;
 @Guice(modules = ApiTestModule.class)
 public class WxMpMaterialServiceImplTest {
   @Inject
-  protected WxMpService wxService;
+  protected WxMaService wxService;
 
   private Map<String, Map<String, Object>> mediaIds = new LinkedHashMap<>();
   // 缩略图的id，测试上传图文使用

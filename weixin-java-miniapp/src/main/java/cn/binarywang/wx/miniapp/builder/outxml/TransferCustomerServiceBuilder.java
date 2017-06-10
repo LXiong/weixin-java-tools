@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 客服消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMaOutMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
+ * 用法: WxMaKefuMessage m = WxMaOutMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
  * </pre>
  *
  * @author chanjarster

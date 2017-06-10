@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.api.test.TestConfigStorage;
 import cn.binarywang.wx.miniapp.bean.WxMpUserQuery;
@@ -27,7 +27,7 @@ import java.util.List;
 public class WxMpUserServiceImplTest {
 
   @Inject
-  private WxMpService wxService;
+  private WxMaService wxService;
 
   private TestConfigStorage configProvider;
 

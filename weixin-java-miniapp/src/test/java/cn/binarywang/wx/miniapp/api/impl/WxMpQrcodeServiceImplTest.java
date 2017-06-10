@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
 import com.google.inject.Inject;
@@ -21,7 +21,7 @@ import java.io.File;
 @Guice(modules = ApiTestModule.class)
 public class WxMpQrcodeServiceImplTest {
   @Inject
-  protected WxMpService wxService;
+  protected WxMaService wxService;
 
   @DataProvider
   public Object[][] sceneIds() {

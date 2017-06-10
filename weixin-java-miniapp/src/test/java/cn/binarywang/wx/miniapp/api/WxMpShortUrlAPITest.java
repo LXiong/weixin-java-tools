@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 public class WxMpShortUrlAPITest {
 
   @Inject
-  protected WxMpService wxService;
+  protected WxMaService wxService;
 
   public void testShortUrl() throws WxErrorException {
     String shortUrl = this.wxService.shortUrl("www.baidu.com");

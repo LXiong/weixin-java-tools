@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.demo;
 
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
 import cn.binarywang.wx.miniapp.api.WxMpMessageRouter;
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import cn.binarywang.wx.miniapp.constant.MsgType;
@@ -19,13 +19,13 @@ public class WxMaPortalServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   protected WxMpConfigStorage wxMpConfigStorage;
-  protected WxMpService wxMpService;
+  protected WxMaService wxMaService;
   protected WxMpMessageRouter wxMpMessageRouter;
 
-  public WxMaPortalServlet(WxMpConfigStorage wxMpConfigStorage, WxMpService wxMpService,
+  public WxMaPortalServlet(WxMpConfigStorage wxMpConfigStorage, WxMaService wxMaService,
                            WxMpMessageRouter wxMpMessageRouter) {
     this.wxMpConfigStorage = wxMpConfigStorage;
-    this.wxMpService = wxMpService;
+    this.wxMaService = wxMaService;
     this.wxMpMessageRouter = wxMpMessageRouter;
   }
 
@@ -39,7 +39,7 @@ public class WxMaPortalServlet extends HttpServlet {
     String nonce = request.getParameter("nonce");
     String timestamp = request.getParameter("timestamp");
 
-    if (!this.wxMpService.checkSignature(timestamp, nonce, signature)) {
+    if (!this.wxMaService.checkSignature(timestamp, nonce, signature)) {
       // 消息签名不正确，说明不是公众平台发过来的消息
       response.getWriter().println("非法请求");
       return;

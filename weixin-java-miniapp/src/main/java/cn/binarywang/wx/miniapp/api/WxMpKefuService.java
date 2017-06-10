@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.kefu.request.WxMpKfAccountRequest;
 import cn.binarywang.wx.miniapp.bean.kefu.result.*;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -39,7 +39,7 @@ public interface WxMpKefuService {
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
    * </pre>
    */
-  boolean sendKefuMessage(WxMpKefuMessage message) throws WxErrorException;
+  boolean sendKefuMessage(WxMaKefuMessage message) throws WxErrorException;
 
   //*******************客服管理接口***********************//
 

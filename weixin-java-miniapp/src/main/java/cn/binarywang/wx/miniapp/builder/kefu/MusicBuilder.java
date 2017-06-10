@@ -1,12 +1,12 @@
 package cn.binarywang.wx.miniapp.builder.kefu;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 
 /**
  * 音乐消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpKefuMessage.MUSIC()
+ * 用法: WxMaKefuMessage m = WxMaKefuMessage.MUSIC()
  *                      .musicUrl(...)
  *                      .hqMusicUrl(...)
  *                      .title(...)
@@ -53,8 +53,8 @@ public final class MusicBuilder extends BaseBuilder<MusicBuilder> {
   }
 
   @Override
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = super.build();
+  public WxMaKefuMessage build() {
+    WxMaKefuMessage m = super.build();
     m.setMusicUrl(this.musicUrl);
     m.setHqMusicUrl(this.hqMusicUrl);
     m.setTitle(this.title);

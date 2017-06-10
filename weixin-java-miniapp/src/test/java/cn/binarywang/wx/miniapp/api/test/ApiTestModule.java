@@ -1,8 +1,8 @@
 package cn.binarywang.wx.miniapp.api.test;
 
 import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
-import cn.binarywang.wx.miniapp.api.WxMpService;
-import cn.binarywang.wx.miniapp.api.impl.WxMpServiceApacheHttpClientImpl;
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceApacheHttpClientImpl;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
@@ -19,10 +19,10 @@ public class ApiTestModule implements Module {
     try (InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml")) {
       TestConfigStorage config = this.fromXml(TestConfigStorage.class, is1);
       config.setAccessTokenLock(new ReentrantLock());
-      WxMpService wxService = new WxMpServiceApacheHttpClientImpl();
+      WxMaService wxService = new WxMaServiceApacheHttpClientImpl();
       wxService.setWxMpConfigStorage(config);
 
-      binder.bind(WxMpService.class).toInstance(wxService);
+      binder.bind(WxMaService.class).toInstance(wxService);
       binder.bind(WxMpConfigStorage.class).toInstance(config);
     } catch (IOException e) {
       e.printStackTrace();

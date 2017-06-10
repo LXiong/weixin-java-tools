@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.api.impl.WxMpServiceApacheHttpClientImpl;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceApacheHttpClientImpl;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -17,7 +17,7 @@ public class WxMpBusyRetryTest {
 
   @DataProvider(name = "getService")
   public Object[][] getService() {
-    WxMpService service = new WxMpServiceApacheHttpClientImpl() {
+    WxMaService service = new WxMaServiceApacheHttpClientImpl() {
 
       @Override
       public synchronized <T, E> T executeInternal(
@@ -36,12 +36,12 @@ public class WxMpBusyRetryTest {
   }
 
   @Test(dataProvider = "getService", expectedExceptions = RuntimeException.class)
-  public void testRetry(WxMpService service) throws WxErrorException {
+  public void testRetry(WxMaService service) throws WxErrorException {
     service.execute(null, null, null);
   }
 
   @Test(dataProvider = "getService")
-  public void testRetryInThreadPool(final WxMpService service) throws InterruptedException, ExecutionException {
+  public void testRetryInThreadPool(final WxMaService service) throws InterruptedException, ExecutionException {
     // 当线程池中的线程复用的时候，还是能保证相同的重试次数
     ExecutorService executorService = Executors.newFixedThreadPool(1);
     Runnable runnable = new Runnable() {

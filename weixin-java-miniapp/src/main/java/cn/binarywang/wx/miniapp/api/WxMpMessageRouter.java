@@ -56,7 +56,7 @@ public class WxMpMessageRouter {
   protected final Logger log = LoggerFactory.getLogger(WxMpMessageRouter.class);
   private final List<WxMpMessageRouterRule> rules = new ArrayList<>();
 
-  private final WxMpService wxMpService;
+  private final WxMaService wxMaService;
 
   private ExecutorService executorService;
 
@@ -66,8 +66,8 @@ public class WxMpMessageRouter {
 
   private WxErrorExceptionHandler exceptionHandler;
 
-  public WxMpMessageRouter(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
+  public WxMpMessageRouter(WxMaService wxMaService) {
+    this.wxMaService = wxMaService;
     this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
     this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
     this.sessionManager = new StandardSessionManager();
@@ -153,12 +153,12 @@ public class WxMpMessageRouter {
           this.executorService.submit(new Runnable() {
             @Override
             public void run() {
-              rule.service(wxMessage, context, WxMpMessageRouter.this.wxMpService, WxMpMessageRouter.this.sessionManager, WxMpMessageRouter.this.exceptionHandler);
+              rule.service(wxMessage, context, WxMpMessageRouter.this.wxMaService, WxMpMessageRouter.this.sessionManager, WxMpMessageRouter.this.exceptionHandler);
             }
           })
         );
       } else {
-        res = rule.service(wxMessage, context, this.wxMpService, this.sessionManager, this.exceptionHandler);
+        res = rule.service(wxMessage, context, this.wxMaService, this.sessionManager, this.exceptionHandler);
         // 在同步操作结束，session访问结束
         this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUser());
         sessionEndAccess(wxMessage);

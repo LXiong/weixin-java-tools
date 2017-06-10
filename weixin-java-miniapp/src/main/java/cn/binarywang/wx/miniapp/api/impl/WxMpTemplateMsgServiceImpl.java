@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMpTemplateMsgService;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplate;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateIndustry;
@@ -22,16 +22,16 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
   public static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/template";
   private static final JsonParser JSON_PARSER = new JsonParser();
 
-  private WxMpService wxMpService;
+  private WxMaService wxMaService;
 
-  public WxMpTemplateMsgServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
+  public WxMpTemplateMsgServiceImpl(WxMaService wxMaService) {
+    this.wxMaService = wxMaService;
   }
 
   @Override
   public String sendTemplateMsg(WxMpTemplateMessage templateMessage) throws WxErrorException {
     String url = "https://api.weixin.qq.com/cgi-bin/message/template/send";
-    String responseContent = this.wxMpService.post(url, templateMessage.toJson());
+    String responseContent = this.wxMaService.post(url, templateMessage.toJson());
     final JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
     if (jsonObject.get("errcode").getAsInt() == 0) {
       return jsonObject.get("msgid").getAsString();
@@ -47,14 +47,14 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
     }
 
     String url = API_URL_PREFIX + "/api_set_industry";
-    this.wxMpService.post(url, wxMpIndustry.toJson());
+    this.wxMaService.post(url, wxMpIndustry.toJson());
     return true;
   }
 
   @Override
   public WxMpTemplateIndustry getIndustry() throws WxErrorException {
     String url = API_URL_PREFIX + "/get_industry";
-    String responseContent = this.wxMpService.get(url, null);
+    String responseContent = this.wxMaService.get(url, null);
     return WxMpTemplateIndustry.fromJson(responseContent);
   }
 
@@ -63,7 +63,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
     String url = API_URL_PREFIX + "/api_add_template";
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("template_id_short", shortTemplateId);
-    String responseContent = this.wxMpService.post(url, jsonObject.toString());
+    String responseContent = this.wxMaService.post(url, jsonObject.toString());
     final JsonObject result = JSON_PARSER.parse(responseContent).getAsJsonObject();
     if (result.get("errcode").getAsInt() == 0) {
       return result.get("template_id").getAsString();
@@ -75,7 +75,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
   @Override
   public List<WxMpTemplate> getAllPrivateTemplate() throws WxErrorException {
     String url = API_URL_PREFIX + "/get_all_private_template";
-    return WxMpTemplate.fromJson(this.wxMpService.get(url, null));
+    return WxMpTemplate.fromJson(this.wxMaService.get(url, null));
   }
 
   @Override
@@ -83,7 +83,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
     String url = API_URL_PREFIX + "/del_private_template";
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("template_id", templateId);
-    String responseContent = this.wxMpService.post(url, jsonObject.toString());
+    String responseContent = this.wxMaService.post(url, jsonObject.toString());
     WxError error = WxError.fromJson(responseContent);
     if (error.getErrorCode() == 0) {
       return true;

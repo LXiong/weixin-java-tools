@@ -1,12 +1,12 @@
 package cn.binarywang.wx.miniapp.builder.kefu;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 
 /**
  * 文本消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpKefuMessage.TEXT().content(...).toUser(...).build();
+ * 用法: WxMaKefuMessage m = WxMaKefuMessage.TEXT().content(...).toUser(...).build();
  * </pre>
  *
  * @author chanjarster
@@ -24,8 +24,8 @@ public final class TextBuilder extends BaseBuilder<TextBuilder> {
   }
 
   @Override
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = super.build();
+  public WxMaKefuMessage build() {
+    WxMaKefuMessage m = super.build();
     m.setContent(this.content);
     return m;
   }

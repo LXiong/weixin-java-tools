@@ -192,7 +192,7 @@ public class WxMpMessageRouterRule {
    */
   protected WxMaOutMessage service(WxMaInMessage wxMessage,
                                    Map<String, Object> context,
-                                   WxMpService wxMpService,
+                                   WxMaService wxMaService,
                                    WxSessionManager sessionManager,
                                    WxErrorExceptionHandler exceptionHandler) {
 
@@ -203,7 +203,7 @@ public class WxMpMessageRouterRule {
     try {
       // 如果拦截器不通过
       for (WxMpMessageInterceptor interceptor : this.interceptors) {
-        if (!interceptor.intercept(wxMessage, context, wxMpService, sessionManager)) {
+        if (!interceptor.intercept(wxMessage, context, wxMaService, sessionManager)) {
           return null;
         }
       }
@@ -215,7 +215,7 @@ public class WxMpMessageRouterRule {
         if (handler == null) {
           continue;
         }
-        res = handler.handle(wxMessage, context, wxMpService, sessionManager);
+        res = handler.handle(wxMessage, context, wxMaService, sessionManager);
       }
       return res;
     } catch (WxErrorException e) {

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 public class WxMpBaseAPITest {
 
   @Inject
-  protected WxMpService wxService;
+  protected WxMaService wxService;
 
   public void testRefreshAccessToken() throws WxErrorException {
     WxMpConfigStorage configStorage = this.wxService.getWxMpConfigStorage();

@@ -1,12 +1,12 @@
 package cn.binarywang.wx.miniapp.builder.kefu;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 
 /**
  * 卡券消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpKefuMessage.WXCARD().cardId(...).toUser(...).build();
+ * 用法: WxMaKefuMessage m = WxMaKefuMessage.WXCARD().cardId(...).toUser(...).build();
  * </pre>
  *
  * @author mgcnrx11
@@ -24,8 +24,8 @@ public final class WxCardBuilder extends BaseBuilder<WxCardBuilder> {
   }
 
   @Override
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = super.build();
+  public WxMaKefuMessage build() {
+    WxMaKefuMessage m = super.build();
     m.setCardId(this.cardId);
     return m;
   }

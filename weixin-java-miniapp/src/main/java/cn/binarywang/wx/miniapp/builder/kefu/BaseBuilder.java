@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.builder.kefu;
 
-import cn.binarywang.wx.miniapp.bean.kefu.WxMpKefuMessage;
+import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 
 public class BaseBuilder<T> {
   protected String msgType;
@@ -12,8 +12,8 @@ public class BaseBuilder<T> {
     return (T) this;
   }
 
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = new WxMpKefuMessage();
+  public WxMaKefuMessage build() {
+    WxMaKefuMessage m = new WxMaKefuMessage();
     m.setMsgType(this.msgType);
     m.setToUser(this.toUser);
     return m;
