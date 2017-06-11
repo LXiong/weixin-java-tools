@@ -10,44 +10,36 @@ import java.io.Serializable;
  * @author chanjarster
  */
 public class WxMpQrCodeTicket implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 5777119669111011584L;
-  protected String ticket;
-  protected int expire_seconds = -1;
-  protected String url;
+  private String path;
+  private int width = 430;
+
+  public WxMpQrCodeTicket() {
+  }
+
+  public WxMpQrCodeTicket(String path, int width) {
+    this.path = path;
+    this.width = width;
+  }
 
   public static WxMpQrCodeTicket fromJson(String json) {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
   }
 
-  public String getTicket() {
-    return this.ticket;
+  public String getPath() {
+    return path;
   }
 
-  public void setTicket(String ticket) {
-    this.ticket = ticket;
+  public void setPath(String path) {
+    this.path = path;
   }
 
-  /**
-   * 如果返回-1说明是永久
-   */
-  public int getExpire_seconds() {
-    return this.expire_seconds;
+  public int getWidth() {
+    return width;
   }
 
-  public void setExpire_seconds(int expire_seconds) {
-    this.expire_seconds = expire_seconds;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
+  public void setWidth(int width) {
+    this.width = width;
   }
 
   @Override

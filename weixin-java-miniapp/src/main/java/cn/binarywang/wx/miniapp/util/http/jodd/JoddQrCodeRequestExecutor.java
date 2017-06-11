@@ -17,7 +17,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.UUID;
 
 /**
@@ -30,19 +29,11 @@ public class JoddQrCodeRequestExecutor extends QrCodeRequestExecutor<HttpConnect
 
   @Override
   public File execute(String uri, WxMpQrCodeTicket ticket) throws WxErrorException, IOException {
-    if (ticket != null) {
-      if (uri.indexOf('?') == -1) {
-        uri += '?';
-      }
-      uri += uri.endsWith("?")
-        ? "ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8")
-        : "&ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8");
-    }
-
-    HttpRequest request = HttpRequest.get(uri);
+    HttpRequest request = HttpRequest.post(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());
     }
+    request.bodyText(ticket.toString());
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
 
     HttpResponse response = request.send();

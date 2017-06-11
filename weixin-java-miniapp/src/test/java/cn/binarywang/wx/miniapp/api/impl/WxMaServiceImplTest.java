@@ -1,11 +1,17 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
 import com.google.inject.Inject;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
 
 @Test
 @Guice(modules = ApiTestModule.class)
@@ -107,6 +113,16 @@ public class WxMaServiceImplTest {
   @Test
   public void testExecute() {
     Assert.fail("Not yet implemented");
+  }
+
+  public void testRefreshAccessToken() throws WxErrorException {
+    WxMaConfig configStorage = this.wxService.getWxMaConfig();
+    String before = configStorage.getAccessToken();
+    this.wxService.getAccessToken(false);
+
+    String after = configStorage.getAccessToken();
+    assertNotEquals(before, after);
+    assertTrue(StringUtils.isNotBlank(after));
   }
 
 }

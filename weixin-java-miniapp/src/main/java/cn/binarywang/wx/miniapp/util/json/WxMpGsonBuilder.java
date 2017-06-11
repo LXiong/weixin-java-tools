@@ -20,7 +20,6 @@ public class WxMpGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMaKefuMessage.class, new WxMpKefuMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpUser.class, new WxMpUserGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpUserList.class, new WxUserListGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpQrCodeTicket.class, new WxQrCodeTicketAdapter());
     INSTANCE.registerTypeAdapter(WxMaTemplateMessage.class, new WxMpTemplateMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpSemanticQueryResult.class, new WxMpSemanticQueryResultAdapter());
     INSTANCE.registerTypeAdapter(WxMpMaterialUploadResult.class, new WxMpMaterialUploadResultAdapter());

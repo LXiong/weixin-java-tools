@@ -148,9 +148,9 @@ public interface WxMaService {
   /**
    * 返回二维码相关接口方法的实现类对象，以方便调用其各个接口
    *
-   * @return WxMpQrcodeService
+   * @return WxMaQrcodeService
    */
-  WxMpQrcodeService getQrcodeService();
+  WxMaQrcodeService getQrcodeService();
 
   /**
    * 返回模板消息相关接口方法的实现类对象，以方便调用其各个接口

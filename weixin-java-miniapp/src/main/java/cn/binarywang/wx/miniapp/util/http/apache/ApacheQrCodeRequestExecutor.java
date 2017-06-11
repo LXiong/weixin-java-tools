@@ -12,19 +12,16 @@ import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.UUID;
 
-/**
- * Created by ecoolper on 2017/5/5.
- */
 public class ApacheQrCodeRequestExecutor extends QrCodeRequestExecutor<CloseableHttpClient, HttpHost> {
   public ApacheQrCodeRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
@@ -32,22 +29,13 @@ public class ApacheQrCodeRequestExecutor extends QrCodeRequestExecutor<Closeable
 
   @Override
   public File execute(String uri, WxMpQrCodeTicket ticket) throws WxErrorException, IOException {
-    if (ticket != null) {
-      if (uri.indexOf('?') == -1) {
-        uri += '?';
-      }
-      uri += uri.endsWith("?")
-        ? "ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8")
-        : "&ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8");
-    }
-
-    HttpGet httpGet = new HttpGet(uri);
+    HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
-      RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();
-      httpGet.setConfig(config);
+      httpPost.setConfig(RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build());
     }
+    httpPost.setEntity(new StringEntity(ticket.toString()));
 
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpGet);
+    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost);
          InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);) {
       Header[] contentTypeHeader = response.getHeaders("Content-Type");
       if (contentTypeHeader != null && contentTypeHeader.length > 0) {
@@ -59,7 +47,7 @@ public class ApacheQrCodeRequestExecutor extends QrCodeRequestExecutor<Closeable
       }
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
     } finally {
-      httpGet.releaseConnection();
+      httpPost.releaseConnection();
     }
   }
 }
