@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.demo;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.mssage.WxMpMessageRouter;
+import cn.binarywang.wx.miniapp.message.WxMpMessageRouter;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import cn.binarywang.wx.miniapp.constant.MsgDataFormat;

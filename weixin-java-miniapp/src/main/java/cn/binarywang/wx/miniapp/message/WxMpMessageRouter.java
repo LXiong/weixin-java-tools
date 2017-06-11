@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.mssage;
+package cn.binarywang.wx.miniapp.message;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
