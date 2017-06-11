@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http;
 
-import cn.binarywang.wx.miniapp.bean.WxMpQrcode;
+import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
 import cn.binarywang.wx.miniapp.util.http.apache.ApacheQrCodeRequestExecutor;
 import cn.binarywang.wx.miniapp.util.http.jodd.JoddQrCodeRequestExecutor;
 import cn.binarywang.wx.miniapp.util.http.okhttp.OkhttpQrCodeRequestExecutor;
@@ -14,14 +14,14 @@ import java.io.File;
  *
  * @author chanjarster
  */
-public abstract class QrCodeRequestExecutor<H, P> implements RequestExecutor<File, WxMpQrcode> {
+public abstract class QrCodeRequestExecutor<H, P> implements RequestExecutor<File, WxMaQrcode> {
   protected RequestHttp<H, P> requestHttp;
 
   public QrCodeRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
   }
 
-  public static RequestExecutor<File, WxMpQrcode> create(RequestHttp requestHttp) {
+  public static RequestExecutor<File, WxMaQrcode> create(RequestHttp requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
         return new ApacheQrCodeRequestExecutor(requestHttp);

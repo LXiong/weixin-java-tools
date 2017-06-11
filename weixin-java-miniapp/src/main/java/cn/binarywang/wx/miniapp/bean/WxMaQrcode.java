@@ -4,18 +4,18 @@ import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
 
-public class WxMpQrcode implements Serializable {
+public class WxMaQrcode implements Serializable {
   private static final long serialVersionUID = 5777119669111011584L;
   private String path;
   private int width = 430;
 
-  public WxMpQrcode(String path, int width) {
+  public WxMaQrcode(String path, int width) {
     this.path = path;
     this.width = width;
   }
 
-  public static WxMpQrcode fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrcode.class);
+  public static WxMaQrcode fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMaQrcode.class);
   }
 
   public String getPath() {

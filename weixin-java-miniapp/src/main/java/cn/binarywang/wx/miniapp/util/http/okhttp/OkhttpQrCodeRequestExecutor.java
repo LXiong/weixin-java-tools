@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http.okhttp;
 
-import cn.binarywang.wx.miniapp.bean.WxMpQrcode;
+import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
 import cn.binarywang.wx.miniapp.util.http.QrCodeRequestExecutor;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -24,7 +24,7 @@ public class OkhttpQrCodeRequestExecutor extends QrCodeRequestExecutor<Connectio
   }
 
   @Override
-  public File execute(String uri, WxMpQrcode data) throws WxErrorException, IOException {
+  public File execute(String uri, WxMaQrcode data) throws WxErrorException, IOException {
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(requestHttp.getRequestHttpClient());
     //设置代理
     if (requestHttp.getRequestHttpProxy() != null) {
