@@ -50,34 +50,6 @@ public abstract class WxMaOutMessage implements Serializable {
   }
 
   /**
-   * 获得语音消息builder
-   */
-  public static VoiceBuilder VOICE() {
-    return new VoiceBuilder();
-  }
-
-  /**
-   * 获得视频消息builder
-   */
-  public static VideoBuilder VIDEO() {
-    return new VideoBuilder();
-  }
-
-  /**
-   * 获得音乐消息builder
-   */
-  public static MusicBuilder MUSIC() {
-    return new MusicBuilder();
-  }
-
-  /**
-   * 获得图文消息builder
-   */
-  public static NewsBuilder NEWS() {
-    return new NewsBuilder();
-  }
-
-  /**
    * 获得客服消息builder
    */
   public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {

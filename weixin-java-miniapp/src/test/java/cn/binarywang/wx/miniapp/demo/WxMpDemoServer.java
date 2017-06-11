@@ -6,11 +6,10 @@ import cn.binarywang.wx.miniapp.api.WxMpMessageHandler;
 import cn.binarywang.wx.miniapp.api.WxMpMessageRouter;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.api.test.TestConfig;
-import cn.binarywang.wx.miniapp.api.test.TestConstants;
 import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
-import me.chanjar.weixin.common.api.WxConsts;
+import cn.binarywang.wx.miniapp.bean.template.WxMaTemplateMessage;
+import com.google.common.collect.Lists;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -24,51 +23,65 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WxMpDemoServer {
-
   private static WxMaConfig wxMaConfig;
   private static WxMaService wxMaService;
   private static WxMpMessageRouter wxMpMessageRouter;
+  private static String templateId;
 
   private static final WxMpMessageHandler logHandler = new WxMpMessageHandler() {
     @Override
-    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
-                                 WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
+    public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                       WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
       System.out.println("收到消息：" + wxMessage.toString());
-      return null;
+      wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("收到信息为："+wxMessage.toJson())
+        .toUser(wxMessage.getFromUser()).build());
     }
   };
 
   private static final WxMpMessageHandler textHandler = new WxMpMessageHandler() {
     @Override
-    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
+    public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
                                  WxMaService wxMaService1, WxSessionManager sessionManager)
       throws WxErrorException {
-      wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("测试回复消息")
+      wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("回复文本消息")
         .toUser(wxMessage.getFromUser()).build());
-      return null;
+    }
+
+  };
+
+  private static final WxMpMessageHandler templateMsgHandler = new WxMpMessageHandler() {
+    @Override
+    public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                                 WxMaService wxMaService1, WxSessionManager sessionManager)
+      throws WxErrorException {
+      wxMaService1.getTemplateMsgService().sendTemplateMsg(WxMaTemplateMessage.newBuilder()
+        .templateId(templateId).data(Lists.newArrayList(
+          new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177")))
+        .toUser(wxMessage.getFromUser())
+        .formId("自己替换可用的formid")
+        .build());
     }
 
   };
 
   private static final WxMpMessageHandler picHandler = new WxMpMessageHandler() {
     @Override
-    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
-                                 WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
+    public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                       WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
       try {
-        WxMediaUploadResult wxMediaUploadResult = wxMaService1.getMediaService()
-          .uploadMedia("image", TestConstants.FILE_JPG,
-            ClassLoader.getSystemResourceAsStream("mm.jpeg"));
-        return WxMaOutMessage
-          .IMAGE()
-          .mediaId(wxMediaUploadResult.getMediaId())
-          .fromUser(wxMessage.getToUser())
-          .toUser(wxMessage.getFromUser())
-          .build();
+        WxMediaUploadResult uploadResult = wxMaService1.getMediaService()
+          .uploadMedia("image", "png",
+            ClassLoader.getSystemResourceAsStream("tmp.png"));
+        wxMaService1.getKefuService().sendKefuMessage(
+          WxMaKefuMessage
+            .IMAGE()
+            .mediaId(uploadResult.getMediaId())
+            .toUser(wxMessage.getFromUser())
+            .build());
       } catch (WxErrorException e) {
         e.printStackTrace();
       }
 
-      return null;
     }
   };
 
@@ -91,6 +104,7 @@ public class WxMpDemoServer {
     try (InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml")) {
       TestConfig config = TestConfig.fromXml(is1);
       config.setAccessTokenLock(new ReentrantLock());
+      templateId = config.getTemplateId();
 
       wxMaConfig = config;
       wxMaService = new WxMaServiceImpl();
@@ -99,7 +113,8 @@ public class WxMpDemoServer {
       wxMpMessageRouter = new WxMpMessageRouter(wxMaService);
 
       wxMpMessageRouter.rule().handler(logHandler).next()
-        .rule().async(false).content("哈哈").handler(textHandler).end()
+        .rule().async(false).content("模板").handler(templateMsgHandler).end()
+        .rule().async(false).content("文本").handler(textHandler).end()
         .rule().async(false).content("图片").handler(picHandler).end();
     } catch (IOException e) {
       e.printStackTrace();

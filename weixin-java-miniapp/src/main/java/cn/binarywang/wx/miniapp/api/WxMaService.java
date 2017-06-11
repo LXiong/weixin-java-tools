@@ -155,9 +155,9 @@ public interface WxMaService {
   /**
    * 返回模板消息相关接口方法的实现类对象，以方便调用其各个接口
    *
-   * @return WxMpTemplateMsgService
+   * @return WxMaTemplateMsgService
    */
-  WxMpTemplateMsgService getTemplateMsgService();
+  WxMaTemplateMsgService getTemplateMsgService();
 
   /**
    * 初始化http请求对象

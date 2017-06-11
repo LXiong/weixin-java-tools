@@ -12,12 +12,8 @@ public class XStreamTransformer {
 
   static {
     registerClass(WxMaInMessage.class);
-    registerClass(WxMaOutMusicMessage.class);
-    registerClass(WxMaOutNewsMessage.class);
     registerClass(WxMaOutTextMessage.class);
     registerClass(WxMaOutImageMessage.class);
-    registerClass(WxMaOutVideoMessage.class);
-    registerClass(WxMaOutVoiceMessage.class);
     registerClass(WxMaOutTransferKefuMessage.class);
   }
 

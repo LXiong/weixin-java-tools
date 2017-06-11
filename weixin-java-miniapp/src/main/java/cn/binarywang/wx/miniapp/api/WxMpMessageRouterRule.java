@@ -1,7 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -187,15 +186,13 @@ public class WxMpMessageRouterRule {
   /**
    * 处理微信推送过来的消息
    *
-   * @param wxMessage
    * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
-  protected WxMaOutMessage service(WxMaInMessage wxMessage,
-                                   Map<String, Object> context,
-                                   WxMaService wxMaService,
-                                   WxSessionManager sessionManager,
-                                   WxErrorExceptionHandler exceptionHandler) {
-
+  protected void service(WxMaInMessage wxMessage,
+                         Map<String, Object> context,
+                         WxMaService wxMaService,
+                         WxSessionManager sessionManager,
+                         WxErrorExceptionHandler exceptionHandler) {
     if (context == null) {
       context = new HashMap<>();
     }
@@ -204,25 +201,21 @@ public class WxMpMessageRouterRule {
       // 如果拦截器不通过
       for (WxMpMessageInterceptor interceptor : this.interceptors) {
         if (!interceptor.intercept(wxMessage, context, wxMaService, sessionManager)) {
-          return null;
+          return;
         }
       }
 
       // 交给handler处理
-      WxMaOutMessage res = null;
       for (WxMpMessageHandler handler : this.handlers) {
         // 返回最后handler的结果
         if (handler == null) {
           continue;
         }
-        res = handler.handle(wxMessage, context, wxMaService, sessionManager);
+        handler.handle(wxMessage, context, wxMaService, sessionManager);
       }
-      return res;
     } catch (WxErrorException e) {
       exceptionHandler.handle(e);
     }
-    return null;
-
   }
 
   public WxMpMessageRouter getRouterBuilder() {

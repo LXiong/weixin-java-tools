@@ -1,15 +1,6 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package cn.binarywang.wx.miniapp.util.json;
 
-import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateData;
-import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateMessage;
+import cn.binarywang.wx.miniapp.bean.template.WxMaTemplateMessage;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -17,28 +8,41 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 
-public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTemplateMessage> {
+public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMaTemplateMessage> {
 
   @Override
-  public JsonElement serialize(WxMpTemplateMessage message, Type typeOfSrc, JsonSerializationContext context) {
+  public JsonElement serialize(WxMaTemplateMessage message, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("touser", message.getToUser());
     messageJson.addProperty("template_id", message.getTemplateId());
-    if (message.getUrl() != null) {
-      messageJson.addProperty("url", message.getUrl());
+    if (message.getPage() != null) {
+      messageJson.addProperty("page", message.getPage());
     }
 
-    if (message.getMiniProgram() != null) {
-      JsonObject miniProgramJson = new JsonObject();
-      miniProgramJson.addProperty("appid", message.getMiniProgram().getAppid());
-      miniProgramJson.addProperty("pagepath", message.getMiniProgram().getPagePath());
-      messageJson.add("miniprogram", miniProgramJson);
+    if (message.getFormId() != null) {
+      messageJson.addProperty("form_id", message.getFormId());
+    }
+
+    if (message.getPage() != null) {
+      messageJson.addProperty("page", message.getPage());
+    }
+
+    if (message.getColor() != null) {
+      messageJson.addProperty("color", message.getColor());
+    }
+
+    if (message.getEmphasisKeyword() != null) {
+      messageJson.addProperty("emphasis_keyword", message.getEmphasisKeyword());
     }
 
     JsonObject data = new JsonObject();
     messageJson.add("data", data);
 
-    for (WxMpTemplateData datum : message.getData()) {
+    if (message.getData() == null) {
+      return messageJson;
+    }
+
+    for (WxMaTemplateMessage.Data datum : message.getData()) {
       JsonObject dataJson = new JsonObject();
       dataJson.addProperty("value", datum.getValue());
       if (datum.getColor() != null) {

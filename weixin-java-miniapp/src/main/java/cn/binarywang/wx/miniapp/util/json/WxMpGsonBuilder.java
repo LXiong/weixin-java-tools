@@ -7,8 +7,7 @@ import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
 import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
 import cn.binarywang.wx.miniapp.bean.result.WxMpUser;
 import cn.binarywang.wx.miniapp.bean.result.WxMpUserList;
-import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateIndustry;
-import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateMessage;
+import cn.binarywang.wx.miniapp.bean.template.WxMaTemplateMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,11 +21,9 @@ public class WxMpGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMpUser.class, new WxMpUserGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpUserList.class, new WxUserListGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpQrCodeTicket.class, new WxQrCodeTicketAdapter());
-    INSTANCE.registerTypeAdapter(WxMpTemplateMessage.class, new WxMpTemplateMessageGsonAdapter());
+    INSTANCE.registerTypeAdapter(WxMaTemplateMessage.class, new WxMpTemplateMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpSemanticQueryResult.class, new WxMpSemanticQueryResultAdapter());
     INSTANCE.registerTypeAdapter(WxMpMaterialUploadResult.class, new WxMpMaterialUploadResultAdapter());
-    INSTANCE.registerTypeAdapter(WxMediaImgUploadResult.class, new WxMediaImgUploadResultGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpTemplateIndustry.class, new WxMpIndustryGsonAdapter());
   }
 
   public static Gson create() {

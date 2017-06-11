@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  * Created by ben on 2015/12/29.
  */
-public class WxMpXmlOutTransferKefuMessageTest {
+public class WxMaOutTransferKefuMessageTest {
   @Test
   public void test() {
     WxMaOutTransferKefuMessage m = new WxMaOutTransferKefuMessage();

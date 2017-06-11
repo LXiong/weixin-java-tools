@@ -144,7 +144,6 @@ public class WxMpMessageRouter {
       return null;
     }
 
-    WxMaOutMessage res = null;
     final List<Future<?>> futures = new ArrayList<>();
     for (final WxMpMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
@@ -158,7 +157,7 @@ public class WxMpMessageRouter {
           })
         );
       } else {
-        res = rule.service(wxMessage, context, this.wxMaService, this.sessionManager, this.exceptionHandler);
+        rule.service(wxMessage, context, this.wxMaService, this.sessionManager, this.exceptionHandler);
         // 在同步操作结束，session访问结束
         this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUser());
         sessionEndAccess(wxMessage);
@@ -182,7 +181,7 @@ public class WxMpMessageRouter {
         }
       });
     }
-    return res;
+    return null;
   }
 
   public WxMaOutMessage route(final WxMaInMessage wxMessage) {
