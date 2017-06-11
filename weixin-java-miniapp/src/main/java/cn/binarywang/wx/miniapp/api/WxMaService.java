@@ -131,9 +131,9 @@ public interface WxMaService {
   /**
    * 返回用户相关接口方法的实现类对象，以方便调用其各个接口
    *
-   * @return WxMpUserService
+   * @return WxMaUserService
    */
-  WxMpUserService getUserService();
+  WxMaUserService getUserService();
 
 
   /**

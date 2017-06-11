@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
  *
  * @author Binary Wang
  */
-public interface WxMpUserService {
+public interface WxMaUserService {
   /**
    * 获取sessionKey
    * @param jsCode 登录时获取的 code

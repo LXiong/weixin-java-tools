@@ -3,7 +3,6 @@ package cn.binarywang.wx.miniapp.util.xml;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaOutImageMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaOutTextMessage;
-import cn.binarywang.wx.miniapp.bean.message.WxMaOutTransferKefuMessage;
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 
@@ -17,7 +16,6 @@ public class XStreamTransformer {
     registerClass(WxMaInMessage.class);
     registerClass(WxMaOutTextMessage.class);
     registerClass(WxMaOutImageMessage.class);
-    registerClass(WxMaOutTransferKefuMessage.class);
   }
 
   /**

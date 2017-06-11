@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.api.WxMpUserService;
+import cn.binarywang.wx.miniapp.api.WxMaUserService;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
@@ -15,10 +15,10 @@ import java.util.Map;
 /**
  * Created by Binary Wang on 2016/7/21.
  */
-public class WxMpUserServiceImpl implements WxMpUserService {
+public class WxMaUserServiceImpl implements WxMaUserService {
   private WxMaService service;
 
-  public WxMpUserServiceImpl(WxMaService service) {
+  public WxMaUserServiceImpl(WxMaService service) {
     this.service = service;
   }
 

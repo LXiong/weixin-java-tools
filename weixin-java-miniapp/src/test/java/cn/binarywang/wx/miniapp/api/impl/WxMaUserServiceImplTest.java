@@ -17,7 +17,7 @@ import static org.testng.Assert.assertTrue;
  */
 @Test
 @Guice(modules = ApiTestModule.class)
-public class WxMpUserServiceImplTest {
+public class WxMaUserServiceImplTest {
 
   @Inject
   private WxMaService wxService;

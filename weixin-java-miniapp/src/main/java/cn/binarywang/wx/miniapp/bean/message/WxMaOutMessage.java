@@ -3,7 +3,6 @@ package cn.binarywang.wx.miniapp.bean.message;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.builder.outxml.ImageBuilder;
 import cn.binarywang.wx.miniapp.builder.outxml.TextBuilder;
-import cn.binarywang.wx.miniapp.builder.outxml.TransferCustomerServiceBuilder;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
@@ -49,13 +48,6 @@ public abstract class WxMaOutMessage implements Serializable {
    */
   public static ImageBuilder IMAGE() {
     return new ImageBuilder();
-  }
-
-  /**
-   * 获得客服消息builder
-   */
-  public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
-    return new TransferCustomerServiceBuilder();
   }
 
   public String getToUserName() {

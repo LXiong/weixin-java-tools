@@ -25,7 +25,7 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   private WxMaConfig wxMaConfig;
   private WxMaMsgService kefuService = new WxMaMsgServiceImpl(this);
   private WxMaMediaService materialService = new WxMaMediaServiceImpl(this);
-  private WxMpUserService userService = new WxMpUserServiceImpl(this);
+  private WxMaUserService userService = new WxMaUserServiceImpl(this);
   private WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
 
   private int retrySleepMillis = 1000;
@@ -174,7 +174,7 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   }
 
   @Override
-  public WxMpUserService getUserService() {
+  public WxMaUserService getUserService() {
     return this.userService;
   }
 
