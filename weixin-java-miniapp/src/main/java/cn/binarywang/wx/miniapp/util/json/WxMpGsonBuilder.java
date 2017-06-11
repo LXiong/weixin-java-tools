@@ -1,9 +1,7 @@
 package cn.binarywang.wx.miniapp.util.json;
 
 import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
-import cn.binarywang.wx.miniapp.bean.material.WxMediaImgUploadResult;
 import cn.binarywang.wx.miniapp.bean.material.WxMpMaterialUploadResult;
-import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
 import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
 import cn.binarywang.wx.miniapp.bean.result.WxMpUser;
 import cn.binarywang.wx.miniapp.bean.result.WxMpUserList;

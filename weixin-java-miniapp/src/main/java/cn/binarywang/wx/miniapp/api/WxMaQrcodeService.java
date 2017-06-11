@@ -25,5 +25,5 @@ public interface WxMaQrcodeService {
    *  @param path  不能为空，最大长度 128 字节
    * @param width 默认430 二维码的宽度
    */
-  File createQrCode(String path, int width) throws WxErrorException;
+  File createQrcode(String path, int width) throws WxErrorException;
 }

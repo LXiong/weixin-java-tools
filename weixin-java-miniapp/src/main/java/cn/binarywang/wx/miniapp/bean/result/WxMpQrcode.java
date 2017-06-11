@@ -4,26 +4,18 @@ import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
 
-/**
- * 换取二维码的Ticket
- *
- * @author chanjarster
- */
-public class WxMpQrCodeTicket implements Serializable {
+public class WxMpQrcode implements Serializable {
   private static final long serialVersionUID = 5777119669111011584L;
   private String path;
   private int width = 430;
 
-  public WxMpQrCodeTicket() {
-  }
-
-  public WxMpQrCodeTicket(String path, int width) {
+  public WxMpQrcode(String path, int width) {
     this.path = path;
     this.width = width;
   }
 
-  public static WxMpQrCodeTicket fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
+  public static WxMpQrcode fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrcode.class);
   }
 
   public String getPath() {

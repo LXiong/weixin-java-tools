@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http.apache;
 
-import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
+import cn.binarywang.wx.miniapp.bean.result.WxMpQrcode;
 import cn.binarywang.wx.miniapp.util.http.QrCodeRequestExecutor;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -28,7 +28,7 @@ public class ApacheQrCodeRequestExecutor extends QrCodeRequestExecutor<Closeable
   }
 
   @Override
-  public File execute(String uri, WxMpQrCodeTicket ticket) throws WxErrorException, IOException {
+  public File execute(String uri, WxMpQrcode ticket) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       httpPost.setConfig(RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build());

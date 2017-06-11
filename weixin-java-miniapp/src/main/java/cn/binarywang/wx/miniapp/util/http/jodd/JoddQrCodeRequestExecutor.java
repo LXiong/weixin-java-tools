@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http.jodd;
 
-import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
+import cn.binarywang.wx.miniapp.bean.result.WxMpQrcode;
 import cn.binarywang.wx.miniapp.util.http.QrCodeRequestExecutor;
 import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
@@ -28,7 +28,7 @@ public class JoddQrCodeRequestExecutor extends QrCodeRequestExecutor<HttpConnect
   }
 
   @Override
-  public File execute(String uri, WxMpQrCodeTicket ticket) throws WxErrorException, IOException {
+  public File execute(String uri, WxMpQrcode ticket) throws WxErrorException, IOException {
     HttpRequest request = HttpRequest.post(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());

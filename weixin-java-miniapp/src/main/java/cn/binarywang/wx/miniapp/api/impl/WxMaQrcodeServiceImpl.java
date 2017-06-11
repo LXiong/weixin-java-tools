@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaQrcodeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
+import cn.binarywang.wx.miniapp.bean.result.WxMpQrcode;
 import cn.binarywang.wx.miniapp.util.http.QrCodeRequestExecutor;
 import me.chanjar.weixin.common.exception.WxErrorException;
 
@@ -19,10 +19,10 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   }
 
   @Override
-  public File createQrCode(String path, int width) throws WxErrorException {
+  public File createQrcode(String path, int width) throws WxErrorException {
     String url = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
     File file = this.wxMaService.execute(QrCodeRequestExecutor.create(this.wxMaService.getRequestHttp()),
-      url, new WxMpQrCodeTicket(path,width));
+      url, new WxMpQrcode(path,width));
     return file;
   }
 
