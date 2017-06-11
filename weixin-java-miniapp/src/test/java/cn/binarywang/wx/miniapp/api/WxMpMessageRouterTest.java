@@ -22,23 +22,7 @@ public class WxMpMessageRouterTest {
   @Test(enabled = false)
   public void prepare(boolean async, StringBuffer sb, WxMpMessageRouter router) {
     router
-      .rule()
-      .async(async)
-      .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK).eventKey("KEY_1").content("CONTENT_1")
-      .handler(new WxEchoMpMessageHandler(sb, "COMBINE_4"))
-      .end()
-      .rule()
-      .async(async)
-      .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK).eventKey("KEY_1")
-      .handler(new WxEchoMpMessageHandler(sb, "COMBINE_3"))
-      .end()
-      .rule()
-      .async(async)
-      .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK)
-      .handler(new WxEchoMpMessageHandler(sb, "COMBINE_2"))
-      .end()
       .rule().async(async).msgType(WxConsts.XML_MSG_TEXT).handler(new WxEchoMpMessageHandler(sb, WxConsts.XML_MSG_TEXT)).end()
-      .rule().async(async).event(WxConsts.EVT_CLICK).handler(new WxEchoMpMessageHandler(sb, WxConsts.EVT_CLICK)).end()
       .rule().async(async).eventKey("KEY_1").handler(new WxEchoMpMessageHandler(sb, "KEY_1")).end()
       .rule().async(async).content("CONTENT_1").handler(new WxEchoMpMessageHandler(sb, "CONTENT_1")).end()
       .rule().async(async).rContent(".*bc.*").handler(new WxEchoMpMessageHandler(sb, "abcd")).end()
@@ -97,9 +81,6 @@ public class WxMpMessageRouterTest {
     WxMaInMessage message1 = new WxMaInMessage();
     message1.setMsgType(WxConsts.XML_MSG_TEXT);
 
-    WxMaInMessage message2 = new WxMaInMessage();
-    message2.setEvent(WxConsts.EVT_CLICK);
-
     WxMaInMessage message4 = new WxMaInMessage();
     message4.setContent("CONTENT_1");
 
@@ -109,28 +90,11 @@ public class WxMpMessageRouterTest {
     WxMaInMessage message6 = new WxMaInMessage();
     message6.setContent("abcd");
 
-    WxMaInMessage c2 = new WxMaInMessage();
-    c2.setMsgType(WxConsts.XML_MSG_TEXT);
-    c2.setEvent(WxConsts.EVT_CLICK);
-
-    WxMaInMessage c3 = new WxMaInMessage();
-    c3.setMsgType(WxConsts.XML_MSG_TEXT);
-    c3.setEvent(WxConsts.EVT_CLICK);
-
-    WxMaInMessage c4 = new WxMaInMessage();
-    c4.setMsgType(WxConsts.XML_MSG_TEXT);
-    c4.setEvent(WxConsts.EVT_CLICK);
-    c4.setContent("CONTENT_1");
-
     return new Object[][]{
       new Object[]{message1, WxConsts.XML_MSG_TEXT + ","},
-      new Object[]{message2, WxConsts.EVT_CLICK + ","},
       new Object[]{message4, "CONTENT_1,"},
       new Object[]{message5, "ALL,"},
       new Object[]{message6, "abcd,"},
-      new Object[]{c2, "COMBINE_2,"},
-      new Object[]{c3, "COMBINE_3,"},
-      new Object[]{c4, "COMBINE_4,"}
     };
 
   }

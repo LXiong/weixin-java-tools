@@ -18,7 +18,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
       "<ToUserName><![CDATA[touser]]></ToUserName>" +
       "<FromUserName><![CDATA[fromuser]]></FromUserName>" +
       "<CreateTime>1399197672</CreateTime>" +
-      "<MsgType><![CDATA[transfer_customer_service]]></MsgType>" +
+      "<MsgDataFormat><![CDATA[transfer_customer_service]]></MsgDataFormat>" +
       "</xml>";
     System.out.println(m.toXml());
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));
@@ -27,7 +27,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
       "<ToUserName><![CDATA[touser]]></ToUserName>" +
       "<FromUserName><![CDATA[fromuser]]></FromUserName>" +
       "<CreateTime>1399197672</CreateTime>" +
-      "<MsgType><![CDATA[transfer_customer_service]]></MsgType>" +
+      "<MsgDataFormat><![CDATA[transfer_customer_service]]></MsgDataFormat>" +
       "<TransInfo>" +
       "<KfAccount><![CDATA[test1@test]]></KfAccount>" +
       "</TransInfo>" +
@@ -47,7 +47,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
       "<ToUserName><![CDATA[touser]]></ToUserName>" +
       "<FromUserName><![CDATA[fromuser]]></FromUserName>" +
       "<CreateTime>1399197672</CreateTime>" +
-      "<MsgType><![CDATA[transfer_customer_service]]></MsgType>" +
+      "<MsgDataFormat><![CDATA[transfer_customer_service]]></MsgDataFormat>" +
       "</xml>";
     System.out.println(m.toXml());
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));
@@ -57,7 +57,7 @@ public class WxMpXmlOutTransferKefuMessageTest {
       "<ToUserName><![CDATA[touser]]></ToUserName>" +
       "<FromUserName><![CDATA[fromuser]]></FromUserName>" +
       "<CreateTime>1399197672</CreateTime>" +
-      "<MsgType><![CDATA[transfer_customer_service]]></MsgType>" +
+      "<MsgDataFormat><![CDATA[transfer_customer_service]]></MsgDataFormat>" +
       "<TransInfo>" +
       "<KfAccount><![CDATA[test1@test]]></KfAccount>" +
       "</TransInfo>" +

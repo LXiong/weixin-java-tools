@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -43,7 +43,7 @@ public class WxMaServiceApacheHttpClientImpl extends AbstractWxMaServiceImpl<Clo
 
   @Override
   public void initHttp() {
-    WxMpConfigStorage configStorage = this.getWxMpConfigStorage();
+    WxMaConfig configStorage = this.getWxMaConfig();
     ApacheHttpClientBuilder apacheHttpClientBuilder = configStorage.getApacheHttpClientBuilder();
     if (null == apacheHttpClientBuilder) {
       apacheHttpClientBuilder = DefaultApacheHttpClientBuilder.get();
@@ -68,17 +68,17 @@ public class WxMaServiceApacheHttpClientImpl extends AbstractWxMaServiceImpl<Clo
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    Lock lock = this.getWxMaConfig().getAccessTokenLock();
     try {
       lock.lock();
 
       if (forceRefresh) {
-        this.getWxMpConfigStorage().expireAccessToken();
+        this.getWxMaConfig().expireAccessToken();
       }
 
-      if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppid(),
-          this.getWxMpConfigStorage().getSecret());
+      if (this.getWxMaConfig().isAccessTokenExpired()) {
+        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMaConfig().getAppid(),
+          this.getWxMaConfig().getSecret());
         try {
           HttpGet httpGet = new HttpGet(url);
           if (this.getRequestHttpProxy() != null) {
@@ -92,7 +92,7 @@ public class WxMaServiceApacheHttpClientImpl extends AbstractWxMaServiceImpl<Clo
               throw new WxErrorException(error);
             }
             WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-            this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
+            this.getWxMaConfig().updateAccessToken(accessToken.getAccessToken(),
               accessToken.getExpiresIn());
           } finally {
             httpGet.releaseConnection();
@@ -105,6 +105,6 @@ public class WxMaServiceApacheHttpClientImpl extends AbstractWxMaServiceImpl<Clo
       lock.unlock();
     }
 
-    return this.getWxMpConfigStorage().getAccessToken();
+    return this.getWxMaConfig().getAccessToken();
   }
 }

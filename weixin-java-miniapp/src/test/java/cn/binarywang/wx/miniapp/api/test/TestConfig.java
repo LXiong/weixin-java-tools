@@ -1,27 +1,26 @@
 package cn.binarywang.wx.miniapp.api.test;
 
-import cn.binarywang.wx.miniapp.api.WxMpInMemoryConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaInMemoryConfig;
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.InputStream;
 import java.util.concurrent.locks.Lock;
 
 @XStreamAlias("xml")
-public class TestConfigStorage extends WxMpInMemoryConfigStorage {
+public class TestConfig extends WxMaInMemoryConfig {
+
+  public static TestConfig fromXml(InputStream is) {
+    XStream xstream = XStreamInitializer.getInstance();
+    xstream.processAnnotations(TestConfig.class);
+    return (TestConfig) xstream.fromXML(is);
+  }
 
   private String openid;
   private String kfAccount;
-  private String qrconnectRedirectUrl;
   private String templateId;
-  private String keyPath;
-
-  public String getKeyPath() {
-    return keyPath;
-  }
-
-  public void setKeyPath(String keyPath) {
-    this.keyPath = keyPath;
-  }
 
   public String getOpenid() {
     return this.openid;
@@ -42,14 +41,6 @@ public class TestConfigStorage extends WxMpInMemoryConfigStorage {
 
   public void setKfAccount(String kfAccount) {
     this.kfAccount = kfAccount;
-  }
-
-  public String getQrconnectRedirectUrl() {
-    return this.qrconnectRedirectUrl;
-  }
-
-  public void setQrconnectRedirectUrl(String qrconnectRedirectUrl) {
-    this.qrconnectRedirectUrl = qrconnectRedirectUrl;
   }
 
   public String getTemplateId() {

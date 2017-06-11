@@ -7,7 +7,7 @@ package cn.binarywang.wx.miniapp.constant;
  *
  * @author Binary Wang
  */
-public enum MsgType {
+public enum MsgDataFormat {
   XML,
   JSON;
 }

@@ -17,7 +17,7 @@ public class WxMpXmlOutTextMessageTest {
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"
       + "<CreateTime>1122</CreateTime>"
-      + "<MsgType><![CDATA[text]]></MsgType>"
+      + "<MsgDataFormat><![CDATA[text]]></MsgDataFormat>"
       + "<Content><![CDATA[content]]></Content>"
       + "</xml>";
     System.out.println(m.toXml());
@@ -30,7 +30,7 @@ public class WxMpXmlOutTextMessageTest {
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"
       + "<CreateTime>1122</CreateTime>"
-      + "<MsgType><![CDATA[text]]></MsgType>"
+      + "<MsgDataFormat><![CDATA[text]]></MsgDataFormat>"
       + "<Content><![CDATA[content]]></Content>"
       + "</xml>";
     System.out.println(m.toXml());

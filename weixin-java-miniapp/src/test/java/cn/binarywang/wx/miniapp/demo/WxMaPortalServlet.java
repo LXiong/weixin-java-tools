@@ -1,11 +1,11 @@
 package cn.binarywang.wx.miniapp.demo;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMpMessageRouter;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaOutMessage;
-import cn.binarywang.wx.miniapp.constant.MsgType;
+import cn.binarywang.wx.miniapp.constant.MsgDataFormat;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,13 +18,13 @@ import java.nio.charset.StandardCharsets;
 public class WxMaPortalServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  protected WxMpConfigStorage wxMpConfigStorage;
+  protected WxMaConfig wxMaConfig;
   protected WxMaService wxMaService;
   protected WxMpMessageRouter wxMpMessageRouter;
 
-  public WxMaPortalServlet(WxMpConfigStorage wxMpConfigStorage, WxMaService wxMaService,
+  public WxMaPortalServlet(WxMaConfig wxMaConfig, WxMaService wxMaService,
                            WxMpMessageRouter wxMpMessageRouter) {
-    this.wxMpConfigStorage = wxMpConfigStorage;
+    this.wxMaConfig = wxMaConfig;
     this.wxMaService = wxMaService;
     this.wxMpMessageRouter = wxMpMessageRouter;
   }
@@ -53,7 +53,7 @@ public class WxMaPortalServlet extends HttpServlet {
     }
 
     String encryptType = request.getParameter("encrypt_type");
-    final boolean isJson = this.wxMpConfigStorage.getMsgType() == MsgType.JSON;
+    final boolean isJson = this.wxMaConfig.getMsgDataFormat() == MsgDataFormat.JSON;
     if (StringUtils.isBlank(encryptType)) {
       // 明文传输的消息
       WxMaInMessage inMessage;
@@ -77,19 +77,19 @@ public class WxMaPortalServlet extends HttpServlet {
       WxMaInMessage inMessage;
       if (isJson) {
         inMessage = WxMaInMessage.fromEncryptedJson(request.getInputStream(),
-          this.wxMpConfigStorage, timestamp, nonce, msgSignature);
+          this.wxMaConfig, timestamp, nonce, msgSignature);
       } else {//xml
         inMessage = WxMaInMessage.fromEncryptedXml(request.getInputStream(),
-          this.wxMpConfigStorage, timestamp, nonce, msgSignature);
+          this.wxMaConfig, timestamp, nonce, msgSignature);
       }
       WxMaOutMessage outMessage = this.wxMpMessageRouter.route(inMessage);
       String out;
       if (outMessage == null) {
         out = "success";
       } else if (isJson) {
-        out = outMessage.toEncryptedJson(this.wxMpConfigStorage);
+        out = outMessage.toEncryptedJson(this.wxMaConfig);
       } else {
-        out = outMessage.toEncryptedXml(this.wxMpConfigStorage);
+        out = outMessage.toEncryptedXml(this.wxMaConfig);
       }
 
       this.log(out);

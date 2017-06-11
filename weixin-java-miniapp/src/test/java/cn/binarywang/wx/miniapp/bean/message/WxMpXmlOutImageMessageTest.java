@@ -17,7 +17,7 @@ public class WxMpXmlOutImageMessageTest {
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"
       + "<CreateTime>1122</CreateTime>"
-      + "<MsgType><![CDATA[image]]></MsgType>"
+      + "<MsgDataFormat><![CDATA[image]]></MsgDataFormat>"
       + "<Image><MediaId><![CDATA[ddfefesfsdfef]]></MediaId></Image>"
       + "</xml>";
     System.out.println(m.toXml());
@@ -30,7 +30,7 @@ public class WxMpXmlOutImageMessageTest {
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"
       + "<CreateTime>1122</CreateTime>"
-      + "<MsgType><![CDATA[image]]></MsgType>"
+      + "<MsgDataFormat><![CDATA[image]]></MsgDataFormat>"
       + "<Image><MediaId><![CDATA[ddfefesfsdfef]]></MediaId></Image>"
       + "</xml>";
     System.out.println(m.toXml());

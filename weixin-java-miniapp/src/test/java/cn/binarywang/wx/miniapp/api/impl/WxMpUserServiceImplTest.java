@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
-import cn.binarywang.wx.miniapp.api.test.TestConfigStorage;
+import cn.binarywang.wx.miniapp.api.test.TestConfig;
 import cn.binarywang.wx.miniapp.bean.WxMpUserQuery;
 import cn.binarywang.wx.miniapp.bean.result.WxMpUser;
 import cn.binarywang.wx.miniapp.bean.result.WxMpUserList;
@@ -29,12 +29,12 @@ public class WxMpUserServiceImplTest {
   @Inject
   private WxMaService wxService;
 
-  private TestConfigStorage configProvider;
+  private TestConfig configProvider;
 
   @BeforeTest
   public void setup() {
-    this.configProvider = (TestConfigStorage) this.wxService
-      .getWxMpConfigStorage();
+    this.configProvider = (TestConfig) this.wxService
+      .getWxMaConfig();
   }
 
   public void testUserUpdateRemark() throws WxErrorException {

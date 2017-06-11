@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.message;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypto.WxMpCryptUtil;
 import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
 import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
@@ -39,8 +39,8 @@ public class WxMaInMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private Integer createTime;
 
-  @SerializedName("MsgType")
-  @XStreamAlias("MsgType")
+  @SerializedName("MsgDataFormat")
+  @XStreamAlias("MsgDataFormat")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String msgType;
 
@@ -89,22 +89,22 @@ public class WxMaInMessage implements Serializable {
    * 从加密字符串转换
    *
    * @param encryptedXml      密文
-   * @param wxMpConfigStorage 配置存储器对象
+   * @param wxMaConfig 配置存储器对象
    * @param timestamp         时间戳
    * @param nonce             随机串
    * @param msgSignature      签名串
    */
   public static WxMaInMessage fromEncryptedXml(String encryptedXml,
-                                               WxMpConfigStorage wxMpConfigStorage, String timestamp, String nonce,
+                                               WxMaConfig wxMaConfig, String timestamp, String nonce,
                                                String msgSignature) {
-    String plainText = new WxMpCryptUtil(wxMpConfigStorage).decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = new WxMpCryptUtil(wxMaConfig).decrypt(msgSignature, timestamp, nonce, encryptedXml);
     return fromXml(plainText);
   }
 
-  public static WxMaInMessage fromEncryptedXml(InputStream is, WxMpConfigStorage wxMpConfigStorage, String timestamp,
+  public static WxMaInMessage fromEncryptedXml(InputStream is, WxMaConfig wxMaConfig, String timestamp,
                                                String nonce, String msgSignature) {
     try {
-      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxMpConfigStorage,
+      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxMaConfig,
         timestamp, nonce, msgSignature);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -204,7 +204,7 @@ public class WxMaInMessage implements Serializable {
     this.sessionFrom = sessionFrom;
   }
 
-  public static WxMaInMessage fromEncryptedJson(InputStream inputStream, WxMpConfigStorage configStorage,
+  public static WxMaInMessage fromEncryptedJson(InputStream inputStream, WxMaConfig configStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     try {
       final String encryptedJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8);

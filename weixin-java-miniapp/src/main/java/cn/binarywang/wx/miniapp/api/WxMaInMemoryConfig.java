@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.constant.MsgType;
+import cn.binarywang.wx.miniapp.constant.MsgDataFormat;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
@@ -14,8 +14,8 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author chanjarster
  */
-public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
-  protected volatile MsgType msgType;
+public class WxMaInMemoryConfig implements WxMaConfig {
+  protected volatile MsgDataFormat msgDataFormat;
   protected volatile String appid;
   protected volatile String secret;
   protected volatile String token;
@@ -111,8 +111,8 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   }
 
   @Override
-  public MsgType getMsgType() {
-    return this.msgType;
+  public MsgDataFormat getMsgDataFormat() {
+    return this.msgDataFormat;
   }
 
   public void setAesKey(String aesKey) {
@@ -170,15 +170,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   }
 
   @Override
-  public File getTmpDirFile() {
-    return this.tmpDirFile;
-  }
-
-  public void setTmpDirFile(File tmpDirFile) {
-    this.tmpDirFile = tmpDirFile;
-  }
-
-  @Override
   public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
     return this.apacheHttpClientBuilder;
   }
@@ -192,8 +183,8 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     return true;
   }
 
-  public void setMsgType(MsgType msgType) {
-    this.msgType = msgType;
+  public void setMsgDataFormat(MsgDataFormat msgDataFormat) {
+    this.msgDataFormat = msgDataFormat;
   }
 
   public String getAppid() {

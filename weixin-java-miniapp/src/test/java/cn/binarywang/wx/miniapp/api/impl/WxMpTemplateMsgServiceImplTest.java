@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.test.ApiTestModule;
-import cn.binarywang.wx.miniapp.api.test.TestConfigStorage;
+import cn.binarywang.wx.miniapp.api.test.TestConfig;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplate;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateData;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateIndustry;
@@ -33,8 +33,8 @@ public class WxMpTemplateMsgServiceImplTest {
   public void testSendTemplateMsg() throws WxErrorException {
     SimpleDateFormat dateFormat = new SimpleDateFormat(
       "yyyy-MM-dd HH:mm:ss.SSS");
-    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
-      .getWxMpConfigStorage();
+    TestConfig configStorage = (TestConfig) this.wxService
+      .getWxMaConfig();
     WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
       .toUser(configStorage.getOpenid())
       .templateId(configStorage.getTemplateId()).build();

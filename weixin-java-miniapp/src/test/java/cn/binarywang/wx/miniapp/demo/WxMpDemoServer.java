@@ -1,10 +1,11 @@
 package cn.binarywang.wx.miniapp.demo;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMpMessageHandler;
 import cn.binarywang.wx.miniapp.api.WxMpMessageRouter;
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.api.impl.WxMaServiceApacheHttpClientImpl;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.api.test.TestConfig;
 import cn.binarywang.wx.miniapp.api.test.TestConstants;
 import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.message.WxMaInMessage;
@@ -24,9 +25,52 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class WxMpDemoServer {
 
-  private static WxMpConfigStorage wxMpConfigStorage;
+  private static WxMaConfig wxMaConfig;
   private static WxMaService wxMaService;
   private static WxMpMessageRouter wxMpMessageRouter;
+
+  private static final WxMpMessageHandler logHandler = new WxMpMessageHandler() {
+    @Override
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                                 WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
+      System.out.println("收到消息：" + wxMessage.toString());
+      return null;
+    }
+  };
+
+  private static final WxMpMessageHandler textHandler = new WxMpMessageHandler() {
+    @Override
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                                 WxMaService wxMaService1, WxSessionManager sessionManager)
+      throws WxErrorException {
+      wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("测试回复消息")
+        .toUser(wxMessage.getFromUser()).build());
+      return null;
+    }
+
+  };
+
+  private static final WxMpMessageHandler picHandler = new WxMpMessageHandler() {
+    @Override
+    public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                                 WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
+      try {
+        WxMediaUploadResult wxMediaUploadResult = wxMaService1.getMediaService()
+          .uploadMedia("image", TestConstants.FILE_JPG,
+            ClassLoader.getSystemResourceAsStream("mm.jpeg"));
+        return WxMaOutMessage
+          .IMAGE()
+          .mediaId(wxMediaUploadResult.getMediaId())
+          .fromUser(wxMessage.getToUser())
+          .toUser(wxMessage.getFromUser())
+          .build();
+      } catch (WxErrorException e) {
+        e.printStackTrace();
+      }
+
+      return null;
+    }
+  };
 
   public static void main(String[] args) throws Exception {
     init();
@@ -36,8 +80,7 @@ public class WxMpDemoServer {
     ServletHandler servletHandler = new ServletHandler();
     server.setHandler(servletHandler);
 
-    ServletHolder endpointServletHolder = new ServletHolder(
-      new WxMaPortalServlet(wxMpConfigStorage, wxMaService, wxMpMessageRouter));
+    ServletHolder endpointServletHolder = new ServletHolder(new WxMaPortalServlet(wxMaConfig, wxMaService, wxMpMessageRouter));
     servletHandler.addServletWithMapping(endpointServletHolder, "/*");
 
     server.start();
@@ -46,55 +89,18 @@ public class WxMpDemoServer {
 
   private static void init() {
     try (InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml")) {
-      WxMaDemoInMemoryConfigStorage config = WxMaDemoInMemoryConfigStorage.fromXml(is1);
+      TestConfig config = TestConfig.fromXml(is1);
       config.setAccessTokenLock(new ReentrantLock());
 
-      wxMpConfigStorage = config;
-      wxMaService = new WxMaServiceApacheHttpClientImpl();
-      wxMaService.setWxMpConfigStorage(config);
+      wxMaConfig = config;
+      wxMaService = new WxMaServiceImpl();
+      wxMaService.setWxMaConfig(config);
 
       wxMpMessageRouter = new WxMpMessageRouter(wxMaService);
 
-      wxMpMessageRouter.rule().handler(new WxMpMessageHandler() {
-        @Override
-        public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
-                                     WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
-          System.out.println("收到消息：" + wxMessage.toString());
-          return null;
-        }
-      }).next()
-
-        .rule().async(false).content("哈哈").handler(new WxMpMessageHandler() {
-        @Override
-        public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context,
-                                     WxMaService wxMaService1, WxSessionManager sessionManager)
-          throws WxErrorException {
-          wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("测试回复消息")
-            .toUser(wxMessage.getFromUser()).build());
-          return null;
-        }
-
-      }).end()
-
-        .rule().async(false).content("图片").handler(new WxMpMessageHandler() {
-        @Override
-        public WxMaOutMessage handle(WxMaInMessage wxMessage, Map<String, Object> context, WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
-          try {
-            WxMediaUploadResult wxMediaUploadResult = wxMaService1.getMaterialService()
-              .mediaUpload(WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, ClassLoader.getSystemResourceAsStream("mm.jpeg"));
-            return WxMaOutMessage
-              .IMAGE()
-              .mediaId(wxMediaUploadResult.getMediaId())
-              .fromUser(wxMessage.getToUser())
-              .toUser(wxMessage.getFromUser())
-              .build();
-          } catch (WxErrorException e) {
-            e.printStackTrace();
-          }
-
-          return null;
-        }
-      }).end();
+      wxMpMessageRouter.rule().handler(logHandler).next()
+        .rule().async(false).content("哈哈").handler(textHandler).end()
+        .rule().async(false).content("图片").handler(picHandler).end();
     } catch (IOException e) {
       e.printStackTrace();
     }

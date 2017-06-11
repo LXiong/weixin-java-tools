@@ -112,16 +112,16 @@ public interface WxMaService {
   void setMaxRetryTimes(int maxRetryTimes);
 
   /**
-   * 获取WxMpConfigStorage 对象
+   * 获取WxMaConfig 对象
    *
-   * @return WxMpConfigStorage
+   * @return WxMaConfig
    */
-  WxMpConfigStorage getWxMpConfigStorage();
+  WxMaConfig getWxMaConfig();
 
   /**
-   * 注入 {@link WxMpConfigStorage} 的实现
+   * 注入 {@link WxMaConfig} 的实现
    */
-  void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider);
+  void setWxMaConfig(WxMaConfig wxConfigProvider);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口
@@ -133,9 +133,9 @@ public interface WxMaService {
   /**
    * 返回素材相关接口方法的实现类对象，以方便调用其各个接口
    *
-   * @return WxMpMaterialService
+   * @return WxMaMediaService
    */
-  WxMpMaterialService getMaterialService();
+  WxMaMediaService getMediaService();
 
   /**
    * 返回用户相关接口方法的实现类对象，以方便调用其各个接口

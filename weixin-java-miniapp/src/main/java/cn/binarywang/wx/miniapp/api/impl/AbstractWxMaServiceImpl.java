@@ -23,9 +23,9 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
   protected WxSessionManager sessionManager = new StandardSessionManager();
-  private WxMpConfigStorage wxMpConfigStorage;
+  private WxMaConfig wxMaConfig;
   private WxMpKefuService kefuService = new WxMpKefuServiceImpl(this);
-  private WxMpMaterialService materialService = new WxMpMaterialServiceImpl(this);
+  private WxMaMediaService materialService = new WxMaMediaServiceImpl(this);
   private WxMpUserService userService = new WxMpUserServiceImpl(this);
   private WxMpQrcodeService qrCodeService = new WxMpQrcodeServiceImpl(this);
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
@@ -37,7 +37,7 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
     try {
-      return SHA1.gen(this.getWxMpConfigStorage().getToken(), timestamp, nonce)
+      return SHA1.gen(this.getWxMaConfig().getToken(), timestamp, nonce)
         .equals(signature);
     } catch (Exception e) {
       this.log.error("Checking signature failed, and the reason is :" + e.getMessage());
@@ -133,8 +133,8 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
-        this.getWxMpConfigStorage().expireAccessToken();
-        if (this.getWxMpConfigStorage().autoRefreshToken()) {
+        this.getWxMaConfig().expireAccessToken();
+        if (this.getWxMaConfig().autoRefreshToken()) {
           return this.execute(executor, uri, data);
         }
       }
@@ -151,13 +151,13 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   }
 
   @Override
-  public WxMpConfigStorage getWxMpConfigStorage() {
-    return this.wxMpConfigStorage;
+  public WxMaConfig getWxMaConfig() {
+    return this.wxMaConfig;
   }
 
   @Override
-  public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
-    this.wxMpConfigStorage = wxConfigProvider;
+  public void setWxMaConfig(WxMaConfig wxConfigProvider) {
+    this.wxMaConfig = wxConfigProvider;
     this.initHttp();
   }
 
@@ -177,7 +177,7 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   }
 
   @Override
-  public WxMpMaterialService getMaterialService() {
+  public WxMaMediaService getMediaService() {
     return this.materialService;
   }
 

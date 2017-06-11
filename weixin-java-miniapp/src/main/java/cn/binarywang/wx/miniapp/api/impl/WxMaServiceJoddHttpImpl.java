@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import jodd.http.*;
 import jodd.http.net.SocketHttpConnectionProvider;
@@ -37,7 +37,7 @@ public class WxMaServiceJoddHttpImpl extends AbstractWxMaServiceImpl<HttpConnect
   @Override
   public void initHttp() {
 
-    WxMpConfigStorage configStorage = this.getWxMpConfigStorage();
+    WxMaConfig configStorage = this.getWxMaConfig();
 
     if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
       httpProxy = new ProxyInfo(ProxyInfo.ProxyType.HTTP, configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
@@ -54,17 +54,17 @@ public class WxMaServiceJoddHttpImpl extends AbstractWxMaServiceImpl<HttpConnect
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    Lock lock = this.getWxMaConfig().getAccessTokenLock();
     try {
       lock.lock();
 
       if (forceRefresh) {
-        this.getWxMpConfigStorage().expireAccessToken();
+        this.getWxMaConfig().expireAccessToken();
       }
 
-      if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppid(),
-          this.getWxMpConfigStorage().getSecret());
+      if (this.getWxMaConfig().isAccessTokenExpired()) {
+        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMaConfig().getAppid(),
+          this.getWxMaConfig().getSecret());
 
         HttpRequest request = HttpRequest.get(url);
 
@@ -81,13 +81,13 @@ public class WxMaServiceJoddHttpImpl extends AbstractWxMaServiceImpl<HttpConnect
           throw new WxErrorException(error);
         }
         WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-        this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
+        this.getWxMaConfig().updateAccessToken(accessToken.getAccessToken(),
           accessToken.getExpiresIn());
       }
     } finally {
       lock.unlock();
     }
-    return this.getWxMpConfigStorage().getAccessToken();
+    return this.getWxMaConfig().getAccessToken();
   }
 
 }

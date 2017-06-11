@@ -1,9 +1,12 @@
 package cn.binarywang.wx.miniapp.util.json;
 
-import cn.binarywang.wx.miniapp.bean.*;
 import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
-import cn.binarywang.wx.miniapp.bean.material.*;
-import cn.binarywang.wx.miniapp.bean.result.*;
+import cn.binarywang.wx.miniapp.bean.material.WxMediaImgUploadResult;
+import cn.binarywang.wx.miniapp.bean.material.WxMpMaterialUploadResult;
+import cn.binarywang.wx.miniapp.bean.result.WxMpQrCodeTicket;
+import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
+import cn.binarywang.wx.miniapp.bean.result.WxMpUser;
+import cn.binarywang.wx.miniapp.bean.result.WxMpUserList;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateIndustry;
 import cn.binarywang.wx.miniapp.bean.template.WxMpTemplateMessage;
 import com.google.gson.Gson;
@@ -16,30 +19,12 @@ public class WxMpGsonBuilder {
   static {
     INSTANCE.disableHtmlEscaping();
     INSTANCE.registerTypeAdapter(WxMaKefuMessage.class, new WxMpKefuMessageGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassNews.class, new WxMpMassNewsGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassTagMessage.class, new WxMpMassTagMessageGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassOpenIdsMessage.class, new WxMpMassOpenIdsMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpUser.class, new WxMpUserGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpUserList.class, new WxUserListGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassVideo.class, new WxMpMassVideoAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassSendResult.class, new WxMpMassSendResultAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassUploadResult.class, new WxMpMassUploadResultAdapter());
     INSTANCE.registerTypeAdapter(WxMpQrCodeTicket.class, new WxQrCodeTicketAdapter());
     INSTANCE.registerTypeAdapter(WxMpTemplateMessage.class, new WxMpTemplateMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpSemanticQueryResult.class, new WxMpSemanticQueryResultAdapter());
-    INSTANCE.registerTypeAdapter(WxMpOAuth2AccessToken.class, new WxMpOAuth2AccessTokenAdapter());
     INSTANCE.registerTypeAdapter(WxMpMaterialUploadResult.class, new WxMpMaterialUploadResultAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialVideoInfoResult.class, new WxMpMaterialVideoInfoResultAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassNews.WxMpMassNewsArticle.class, new WxMpMassNewsArticleGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialArticleUpdate.class, new WxMpMaterialArticleUpdateGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialCountResult.class, new WxMpMaterialCountResultAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialNews.class, new WxMpMaterialNewsGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialNews.WxMpMaterialNewsArticle.class, new WxMpMaterialNewsArticleGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialNewsBatchGetResult.class, new WxMpMaterialNewsBatchGetGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem.class, new WxMpMaterialNewsBatchGetGsonItemAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialFileBatchGetResult.class, new WxMpMaterialFileBatchGetGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem.class, new WxMpMaterialFileBatchGetGsonItemAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMassPreviewMessage.class, new WxMpMassPreviewMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMediaImgUploadResult.class, new WxMediaImgUploadResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpTemplateIndustry.class, new WxMpIndustryGsonAdapter());
   }

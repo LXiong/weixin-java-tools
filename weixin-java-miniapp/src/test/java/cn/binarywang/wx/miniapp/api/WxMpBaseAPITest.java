@@ -21,7 +21,7 @@ public class WxMpBaseAPITest {
   protected WxMaService wxService;
 
   public void testRefreshAccessToken() throws WxErrorException {
-    WxMpConfigStorage configStorage = this.wxService.getWxMpConfigStorage();
+    WxMaConfig configStorage = this.wxService.getWxMaConfig();
     String before = configStorage.getAccessToken();
     this.wxService.getAccessToken(false);
 

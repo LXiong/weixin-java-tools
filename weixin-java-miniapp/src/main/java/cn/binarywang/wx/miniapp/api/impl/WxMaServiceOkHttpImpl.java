@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -34,17 +34,17 @@ public class WxMaServiceOkHttpImpl extends AbstractWxMaServiceImpl<ConnectionPoo
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    Lock lock = this.getWxMaConfig().getAccessTokenLock();
     try {
       lock.lock();
 
       if (forceRefresh) {
-        this.getWxMpConfigStorage().expireAccessToken();
+        this.getWxMaConfig().expireAccessToken();
       }
 
-      if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
-        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppid(),
-          this.getWxMpConfigStorage().getSecret());
+      if (this.getWxMaConfig().isAccessTokenExpired()) {
+        String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMaConfig().getAppid(),
+          this.getWxMaConfig().getSecret());
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(httpClient);
         //设置代理
@@ -72,7 +72,7 @@ public class WxMaServiceOkHttpImpl extends AbstractWxMaServiceImpl<ConnectionPoo
           throw new WxErrorException(error);
         }
         WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-        this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
+        this.getWxMaConfig().updateAccessToken(accessToken.getAccessToken(),
           accessToken.getExpiresIn());
       }
     } catch (IOException e) {
@@ -80,12 +80,12 @@ public class WxMaServiceOkHttpImpl extends AbstractWxMaServiceImpl<ConnectionPoo
     } finally {
       lock.unlock();
     }
-    return this.getWxMpConfigStorage().getAccessToken();
+    return this.getWxMaConfig().getAccessToken();
   }
 
   @Override
   public void initHttp() {
-    WxMpConfigStorage configStorage = this.getWxMpConfigStorage();
+    WxMaConfig configStorage = this.getWxMaConfig();
 
     if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
       httpProxy = new OkHttpProxyInfo(OkHttpProxyInfo.ProxyType.SOCKS5, configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());

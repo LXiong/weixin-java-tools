@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.message;
 
-import cn.binarywang.wx.miniapp.api.WxMpConfigStorage;
+import cn.binarywang.wx.miniapp.api.WxMaConfig;
 import cn.binarywang.wx.miniapp.builder.outxml.*;
 import cn.binarywang.wx.miniapp.util.crypto.WxMpCryptUtil;
 import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
@@ -30,8 +30,8 @@ public abstract class WxMaOutMessage implements Serializable {
   @XStreamAlias("CreateTime")
   protected Long createTime;
 
-  @SerializedName("MsgType")
-  @XStreamAlias("MsgType")
+  @SerializedName("MsgDataFormat")
+  @XStreamAlias("MsgDataFormat")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgType;
 
@@ -124,15 +124,15 @@ public abstract class WxMaOutMessage implements Serializable {
   /**
    * 转换成加密的xml格式
    */
-  public String toEncryptedXml(WxMpConfigStorage wxMpConfigStorage) {
+  public String toEncryptedXml(WxMaConfig wxMaConfig) {
     String plainXml = toXml();
-    WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
+    WxMpCryptUtil pc = new WxMpCryptUtil(wxMaConfig);
     return pc.encrypt(plainXml);
   }
   /**
    * 转换成加密的json格式
    */
-  public String toEncryptedJson(WxMpConfigStorage wxMpConfigStorage) {
+  public String toEncryptedJson(WxMaConfig wxMaConfig) {
     return WxMpGsonBuilder.INSTANCE.create().toJson(this);
   }
 }

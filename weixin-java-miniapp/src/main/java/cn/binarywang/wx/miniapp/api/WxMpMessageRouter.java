@@ -35,7 +35,7 @@ import java.util.concurrent.Future;
  * WxMpMessageRouter router = new WxMpMessageRouter();
  * router
  *   .rule()
- *       .msgType("MSG_TYPE").event("EVENT").eventKey("EVENT_KEY").content("CONTENT")
+ *       .msgDataFormat("MSG_TYPE").event("EVENT").eventKey("EVENT_KEY").content("CONTENT")
  *       .interceptor(interceptor, ...).handler(handler, ...)
  *   .end()
  *   .rule()
