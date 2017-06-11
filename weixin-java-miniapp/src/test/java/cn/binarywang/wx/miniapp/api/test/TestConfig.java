@@ -12,15 +12,15 @@ import java.util.concurrent.locks.Lock;
 @XStreamAlias("xml")
 public class TestConfig extends WxMaInMemoryConfig {
 
+  private String openid;
+  private String kfAccount;
+  private String templateId;
+
   public static TestConfig fromXml(InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(TestConfig.class);
     return (TestConfig) xstream.fromXML(is);
   }
-
-  private String openid;
-  private String kfAccount;
-  private String templateId;
 
   public String getOpenid() {
     return this.openid;

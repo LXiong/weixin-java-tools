@@ -22,7 +22,8 @@ public interface WxMaQrcodeService {
    * 可以在开发者工具预览时生成开发版的带参二维码。
    * 带参二维码只有 100000 个，请谨慎调用。
    * </pre>
-   *  @param path  不能为空，最大长度 128 字节
+   *
+   * @param path  不能为空，最大长度 128 字节
    * @param width 默认430 二维码的宽度
    */
   File createQrcode(String path, int width) throws WxErrorException;

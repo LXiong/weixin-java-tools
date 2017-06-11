@@ -1,4 +1,3 @@
-
 package cn.binarywang.wx.miniapp.util.crypto;
 
 import cn.binarywang.wx.miniapp.api.WxMaConfig;

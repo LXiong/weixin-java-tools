@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.bean.result;
+package cn.binarywang.wx.miniapp.bean;
 
 import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
 

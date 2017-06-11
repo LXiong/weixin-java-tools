@@ -1,7 +1,9 @@
 package cn.binarywang.wx.miniapp.bean.message;
 
 import cn.binarywang.wx.miniapp.api.WxMaConfig;
-import cn.binarywang.wx.miniapp.builder.outxml.*;
+import cn.binarywang.wx.miniapp.builder.outxml.ImageBuilder;
+import cn.binarywang.wx.miniapp.builder.outxml.TextBuilder;
+import cn.binarywang.wx.miniapp.builder.outxml.TransferCustomerServiceBuilder;
 import cn.binarywang.wx.miniapp.util.crypto.WxMpCryptUtil;
 import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
 import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
@@ -101,6 +103,7 @@ public abstract class WxMaOutMessage implements Serializable {
     WxMpCryptUtil pc = new WxMpCryptUtil(wxMaConfig);
     return pc.encrypt(plainXml);
   }
+
   /**
    * 转换成加密的json格式
    */
