@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http;
 
-import cn.binarywang.wx.miniapp.bean.result.WxMpQrcode;
+import cn.binarywang.wx.miniapp.bean.WxMpQrcode;
 import cn.binarywang.wx.miniapp.util.http.apache.ApacheQrCodeRequestExecutor;
 import cn.binarywang.wx.miniapp.util.http.jodd.JoddQrCodeRequestExecutor;
 import cn.binarywang.wx.miniapp.util.http.okhttp.OkhttpQrCodeRequestExecutor;

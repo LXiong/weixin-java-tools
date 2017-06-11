@@ -23,47 +23,25 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WxMpDemoServer {
-  private static WxMaConfig wxMaConfig;
-  private static WxMaService wxMaService;
-  private static WxMpMessageRouter wxMpMessageRouter;
-  private static String templateId;
-
   private static final WxMpMessageHandler logHandler = new WxMpMessageHandler() {
     @Override
     public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
                        WxMaService wxMaService1, WxSessionManager sessionManager) throws WxErrorException {
       System.out.println("收到消息：" + wxMessage.toString());
-      wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("收到信息为："+wxMessage.toJson())
+      wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("收到信息为：" + wxMessage.toJson())
         .toUser(wxMessage.getFromUser()).build());
     }
   };
-
   private static final WxMpMessageHandler textHandler = new WxMpMessageHandler() {
     @Override
     public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
-                                 WxMaService wxMaService1, WxSessionManager sessionManager)
+                       WxMaService wxMaService1, WxSessionManager sessionManager)
       throws WxErrorException {
       wxMaService1.getKefuService().sendKefuMessage(WxMaKefuMessage.TEXT().content("回复文本消息")
         .toUser(wxMessage.getFromUser()).build());
     }
 
   };
-
-  private static final WxMpMessageHandler templateMsgHandler = new WxMpMessageHandler() {
-    @Override
-    public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
-                                 WxMaService wxMaService1, WxSessionManager sessionManager)
-      throws WxErrorException {
-      wxMaService1.getTemplateMsgService().sendTemplateMsg(WxMaTemplateMessage.newBuilder()
-        .templateId(templateId).data(Lists.newArrayList(
-          new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177")))
-        .toUser(wxMessage.getFromUser())
-        .formId("自己替换可用的formid")
-        .build());
-    }
-
-  };
-
   private static final WxMpMessageHandler picHandler = new WxMpMessageHandler() {
     @Override
     public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
@@ -83,6 +61,24 @@ public class WxMpDemoServer {
       }
 
     }
+  };
+  private static WxMaConfig wxMaConfig;
+  private static WxMaService wxMaService;
+  private static WxMpMessageRouter wxMpMessageRouter;
+  private static String templateId;
+  private static final WxMpMessageHandler templateMsgHandler = new WxMpMessageHandler() {
+    @Override
+    public void handle(WxMaInMessage wxMessage, Map<String, Object> context,
+                       WxMaService wxMaService1, WxSessionManager sessionManager)
+      throws WxErrorException {
+      wxMaService1.getTemplateMsgService().sendTemplateMsg(WxMaTemplateMessage.newBuilder()
+        .templateId(templateId).data(Lists.newArrayList(
+          new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177")))
+        .toUser(wxMessage.getFromUser())
+        .formId("自己替换可用的formid")
+        .build());
+    }
+
   };
 
   public static void main(String[] args) throws Exception {

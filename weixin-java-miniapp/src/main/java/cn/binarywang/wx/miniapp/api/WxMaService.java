@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.*;
-import cn.binarywang.wx.miniapp.bean.result.*;
+import cn.binarywang.wx.miniapp.bean.WxMpSemanticQuery;
+import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;

@@ -88,11 +88,11 @@ public class WxMaInMessage implements Serializable {
   /**
    * 从加密字符串转换
    *
-   * @param encryptedXml      密文
-   * @param wxMaConfig 配置存储器对象
-   * @param timestamp         时间戳
-   * @param nonce             随机串
-   * @param msgSignature      签名串
+   * @param encryptedXml 密文
+   * @param wxMaConfig   配置存储器对象
+   * @param timestamp    时间戳
+   * @param nonce        随机串
+   * @param msgSignature 签名串
    */
   public static WxMaInMessage fromEncryptedXml(String encryptedXml,
                                                WxMaConfig wxMaConfig, String timestamp, String nonce,
@@ -111,6 +111,21 @@ public class WxMaInMessage implements Serializable {
     }
   }
 
+  public static WxMaInMessage fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMaInMessage.class);
+  }
+
+  public static WxMaInMessage fromEncryptedJson(InputStream inputStream, WxMaConfig configStorage,
+                                                String timestamp, String nonce, String msgSignature) {
+    try {
+      final String encryptedJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+      //String plainText = new WxMpCryptUtil(configStorage).decrypt(msgSignature, timestamp, nonce, encryptedJson);
+      return fromJson(encryptedJson);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
@@ -118,10 +133,6 @@ public class WxMaInMessage implements Serializable {
 
   public String toJson() {
     return WxMpGsonBuilder.INSTANCE.create().toJson(this);
-  }
-
-  public static WxMaInMessage fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMaInMessage.class);
   }
 
   public String getToUser() {
@@ -202,16 +213,5 @@ public class WxMaInMessage implements Serializable {
 
   public void setSessionFrom(String sessionFrom) {
     this.sessionFrom = sessionFrom;
-  }
-
-  public static WxMaInMessage fromEncryptedJson(InputStream inputStream, WxMaConfig configStorage,
-                                                String timestamp, String nonce, String msgSignature) {
-    try {
-      final String encryptedJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-      //String plainText = new WxMpCryptUtil(configStorage).decrypt(msgSignature, timestamp, nonce, encryptedJson);
-      return fromJson(encryptedJson);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 }

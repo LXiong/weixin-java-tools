@@ -1,8 +1,8 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.*;
-import cn.binarywang.wx.miniapp.bean.*;
-import cn.binarywang.wx.miniapp.bean.result.*;
+import cn.binarywang.wx.miniapp.bean.WxMpSemanticQuery;
+import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,7 +11,10 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.*;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

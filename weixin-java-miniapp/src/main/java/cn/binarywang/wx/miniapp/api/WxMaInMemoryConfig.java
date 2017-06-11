@@ -39,10 +39,6 @@ public class WxMaInMemoryConfig implements WxMaConfig {
 
   protected volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
-  public void setAccessTokenLock(Lock accessTokenLock) {
-    this.accessTokenLock = accessTokenLock;
-  }
-
   @Override
   public String getAccessToken() {
     return this.accessToken;
@@ -55,6 +51,10 @@ public class WxMaInMemoryConfig implements WxMaConfig {
   @Override
   public Lock getAccessTokenLock() {
     return this.accessTokenLock;
+  }
+
+  public void setAccessTokenLock(Lock accessTokenLock) {
+    this.accessTokenLock = accessTokenLock;
   }
 
   @Override
@@ -110,13 +110,17 @@ public class WxMaInMemoryConfig implements WxMaConfig {
     return this.aesKey;
   }
 
+  public void setAesKey(String aesKey) {
+    this.aesKey = aesKey;
+  }
+
   @Override
   public MsgDataFormat getMsgDataFormat() {
     return this.msgDataFormat;
   }
 
-  public void setAesKey(String aesKey) {
-    this.aesKey = aesKey;
+  public void setMsgDataFormat(MsgDataFormat msgDataFormat) {
+    this.msgDataFormat = msgDataFormat;
   }
 
   @Override
@@ -181,10 +185,6 @@ public class WxMaInMemoryConfig implements WxMaConfig {
   @Override
   public boolean autoRefreshToken() {
     return true;
-  }
-
-  public void setMsgDataFormat(MsgDataFormat msgDataFormat) {
-    this.msgDataFormat = msgDataFormat;
   }
 
   public String getAppid() {

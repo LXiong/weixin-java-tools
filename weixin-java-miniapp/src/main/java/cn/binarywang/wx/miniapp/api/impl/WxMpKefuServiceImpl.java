@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMpKefuService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.WxMpKefuService;
 import cn.binarywang.wx.miniapp.bean.kefu.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.kefu.request.WxMpKfAccountRequest;
 import cn.binarywang.wx.miniapp.bean.kefu.request.WxMpKfSessionRequest;
