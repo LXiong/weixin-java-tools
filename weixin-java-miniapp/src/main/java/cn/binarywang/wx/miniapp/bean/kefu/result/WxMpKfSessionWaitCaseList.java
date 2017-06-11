@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.kefu.result;
 
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -23,7 +23,7 @@ public class WxMpKfSessionWaitCaseList {
   private List<WxMpKfSession> kfSessionWaitCaseList;
 
   public static WxMpKfSessionWaitCaseList fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json,
+    return WxMaGsonBuilder.INSTANCE.create().fromJson(json,
       WxMpKfSessionWaitCaseList.class);
   }
 

@@ -1,11 +1,11 @@
 package cn.binarywang.wx.miniapp.bean.message;
 
-import cn.binarywang.wx.miniapp.api.WxMaConfig;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.builder.outxml.ImageBuilder;
 import cn.binarywang.wx.miniapp.builder.outxml.TextBuilder;
 import cn.binarywang.wx.miniapp.builder.outxml.TransferCustomerServiceBuilder;
-import cn.binarywang.wx.miniapp.util.crypto.WxMpCryptUtil;
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
 import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -100,7 +100,7 @@ public abstract class WxMaOutMessage implements Serializable {
    */
   public String toEncryptedXml(WxMaConfig wxMaConfig) {
     String plainXml = toXml();
-    WxMpCryptUtil pc = new WxMpCryptUtil(wxMaConfig);
+    WxMaCryptUtils pc = new WxMaCryptUtils(wxMaConfig);
     return pc.encrypt(plainXml);
   }
 
@@ -108,6 +108,6 @@ public abstract class WxMaOutMessage implements Serializable {
    * 转换成加密的json格式
    */
   public String toEncryptedJson(WxMaConfig wxMaConfig) {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMaGsonBuilder.INSTANCE.create().toJson(this);
   }
 }

@@ -1,8 +1,8 @@
 package cn.binarywang.wx.miniapp.bean.message;
 
-import cn.binarywang.wx.miniapp.api.WxMaConfig;
-import cn.binarywang.wx.miniapp.util.crypto.WxMpCryptUtil;
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
 import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -97,7 +97,7 @@ public class WxMaInMessage implements Serializable {
   public static WxMaInMessage fromEncryptedXml(String encryptedXml,
                                                WxMaConfig wxMaConfig, String timestamp, String nonce,
                                                String msgSignature) {
-    String plainText = new WxMpCryptUtil(wxMaConfig).decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = new WxMaCryptUtils(wxMaConfig).decrypt(msgSignature, timestamp, nonce, encryptedXml);
     return fromXml(plainText);
   }
 
@@ -112,14 +112,14 @@ public class WxMaInMessage implements Serializable {
   }
 
   public static WxMaInMessage fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMaInMessage.class);
+    return WxMaGsonBuilder.INSTANCE.create().fromJson(json, WxMaInMessage.class);
   }
 
   public static WxMaInMessage fromEncryptedJson(InputStream inputStream, WxMaConfig configStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     try {
       final String encryptedJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-      //String plainText = new WxMpCryptUtil(configStorage).decrypt(msgSignature, timestamp, nonce, encryptedJson);
+      //String plainText = new WxMaCryptUtils(configStorage).decrypt(msgSignature, timestamp, nonce, encryptedJson);
       return fromJson(encryptedJson);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -132,7 +132,7 @@ public class WxMaInMessage implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMaGsonBuilder.INSTANCE.create().toJson(this);
   }
 
   public String getToUser() {

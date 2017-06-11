@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.kefu.result;
 
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -20,7 +20,7 @@ public class WxMpKfMsgList {
   private Long msgId;
 
   public static WxMpKfMsgList fromJson(String responseContent) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
+    return WxMaGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
   }
 
   public List<WxMpKfMsgRecord> getRecords() {

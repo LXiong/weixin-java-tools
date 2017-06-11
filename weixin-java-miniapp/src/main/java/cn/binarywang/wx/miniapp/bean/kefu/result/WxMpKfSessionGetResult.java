@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.kefu.result;
 
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -21,7 +21,7 @@ public class WxMpKfSessionGetResult {
   private long createTime;
 
   public static WxMpKfSessionGetResult fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfSessionGetResult.class);
+    return WxMaGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfSessionGetResult.class);
   }
 
   @Override

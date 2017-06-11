@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.kefu.request;
 
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -32,7 +32,7 @@ public class WxMpKfSessionRequest implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMaGsonBuilder.INSTANCE.create().toJson(this);
   }
 
   public String getKfAccount() {

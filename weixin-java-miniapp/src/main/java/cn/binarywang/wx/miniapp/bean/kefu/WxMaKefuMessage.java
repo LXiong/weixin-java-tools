@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.bean.kefu;
 
 import cn.binarywang.wx.miniapp.builder.kefu.*;
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -197,7 +197,7 @@ public class WxMaKefuMessage implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMaGsonBuilder.INSTANCE.create().toJson(this);
   }
 
   public String getKfAccount() {

@@ -1,7 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.WxMpSemanticQuery;
-import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -64,14 +63,6 @@ public interface WxMaService {
   String shortUrl(String long_url) throws WxErrorException;
 
   /**
-   * <pre>
-   * 语义查询接口
-   * 详情请见：http://mp.weixin.qq.com/wiki/index.php?title=语义理解
-   * </pre>
-   */
-  WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException;
-
-  /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
    */
   String get(String url, String queryParam) throws WxErrorException;
@@ -124,11 +115,11 @@ public interface WxMaService {
   void setWxMaConfig(WxMaConfig wxConfigProvider);
 
   /**
-   * 返回客服接口方法实现类，以方便调用其各个接口
+   * 返回消息（客服消息和模版消息）发送接口方法实现类，以方便调用其各个接口
    *
-   * @return WxMpKefuService
+   * @return WxMaMsgService
    */
-  WxMpKefuService getKefuService();
+  WxMaMsgService getMsgService();
 
   /**
    * 返回素材相关接口方法的实现类对象，以方便调用其各个接口
@@ -151,13 +142,6 @@ public interface WxMaService {
    * @return WxMaQrcodeService
    */
   WxMaQrcodeService getQrcodeService();
-
-  /**
-   * 返回模板消息相关接口方法的实现类对象，以方便调用其各个接口
-   *
-   * @return WxMaTemplateMsgService
-   */
-  WxMaTemplateMsgService getTemplateMsgService();
 
   /**
    * 初始化http请求对象

@@ -2,68 +2,51 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMpUserService;
-import cn.binarywang.wx.miniapp.bean.WxMpUserQuery;
-import cn.binarywang.wx.miniapp.bean.result.WxMpUser;
-import cn.binarywang.wx.miniapp.bean.result.WxMpUserList;
-import com.google.gson.JsonObject;
+import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
+import com.google.common.base.Joiner;
 import me.chanjar.weixin.common.exception.WxErrorException;
+import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Binary Wang on 2016/7/21.
  */
 public class WxMpUserServiceImpl implements WxMpUserService {
-  private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/user";
-  private WxMaService wxMaService;
+  private WxMaService service;
 
-  public WxMpUserServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
+  public WxMpUserServiceImpl(WxMaService service) {
+    this.service = service;
+  }
+
+  private static String jsCode2sessionUrl = "https://api.weixin.qq.com/sns/jscode2session";
+
+  @Override
+  public String getSessionKey(String jsCode) throws WxErrorException {
+    final WxMaConfig config = service.getWxMaConfig();
+    Map<String, String> params = new HashMap<String, String>();
+    params.put("appid", config.getAppid());
+    params.put("secret", config.getSecret());
+    params.put("js_code", jsCode);
+    params.put("grant_type", "authorization_code");
+
+    final String result = this.service.get(jsCode2sessionUrl, Joiner.on("&").withKeyValueSeparator("=").join(params));
+    return result;
   }
 
   @Override
-  public void userUpdateRemark(String openid, String remark) throws WxErrorException {
-    String url = API_URL_PREFIX + "/info/updateremark";
-    JsonObject json = new JsonObject();
-    json.addProperty("openid", openid);
-    json.addProperty("remark", remark);
-    this.wxMaService.post(url, json.toString());
+  public WxMaUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) {
+    return WxMaUserInfo.fromJson( WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr));
   }
 
   @Override
-  public WxMpUser userInfo(String openid) throws WxErrorException {
-    return this.userInfo(openid, null);
-  }
-
-  @Override
-  public WxMpUser userInfo(String openid, String lang) throws WxErrorException {
-    String url = API_URL_PREFIX + "/info";
-    lang = lang == null ? "zh_CN" : lang;
-    String responseContent = this.wxMaService.get(url,
-      "openid=" + openid + "&lang=" + lang);
-    return WxMpUser.fromJson(responseContent);
-  }
-
-  @Override
-  public WxMpUserList userList(String next_openid) throws WxErrorException {
-    String url = API_URL_PREFIX + "/get";
-    String responseContent = this.wxMaService.get(url,
-      next_openid == null ? null : "next_openid=" + next_openid);
-    return WxMpUserList.fromJson(responseContent);
-  }
-
-  @Override
-  public List<WxMpUser> userInfoList(List<String> openids)
-    throws WxErrorException {
-    return this.userInfoList(new WxMpUserQuery(openids));
-  }
-
-  @Override
-  public List<WxMpUser> userInfoList(WxMpUserQuery userQuery) throws WxErrorException {
-    String url = API_URL_PREFIX + "/info/batchget";
-    String responseContent = this.wxMaService.post(url,
-      userQuery.toJsonString());
-    return WxMpUser.fromJsonList(responseContent);
+  public boolean checkUserInfo(String sessionKey, String rawData, String signature) {
+    final String generatedSignature = DigestUtils.sha1Hex(rawData + sessionKey);
+    System.out.println(generatedSignature);
+    return generatedSignature.equals(signature);
   }
 
 }

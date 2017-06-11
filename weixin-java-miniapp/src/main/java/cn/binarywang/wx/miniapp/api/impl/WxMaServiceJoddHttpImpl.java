@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMaConfig;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import jodd.http.*;
 import jodd.http.net.SocketHttpConnectionProvider;

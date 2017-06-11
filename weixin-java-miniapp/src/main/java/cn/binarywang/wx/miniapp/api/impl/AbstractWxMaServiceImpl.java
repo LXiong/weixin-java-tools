@@ -1,15 +1,12 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.*;
-import cn.binarywang.wx.miniapp.bean.WxMpSemanticQuery;
-import cn.binarywang.wx.miniapp.bean.result.WxMpSemanticQueryResult;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.common.session.StandardSessionManager;
-import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -25,13 +22,11 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   private static final JsonParser JSON_PARSER = new JsonParser();
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
-  protected WxSessionManager sessionManager = new StandardSessionManager();
   private WxMaConfig wxMaConfig;
-  private WxMpKefuService kefuService = new WxMpKefuServiceImpl(this);
+  private WxMaMsgService kefuService = new WxMaMsgServiceImpl(this);
   private WxMaMediaService materialService = new WxMaMediaServiceImpl(this);
   private WxMpUserService userService = new WxMpUserServiceImpl(this);
   private WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
-  private WxMaTemplateMsgService templateMsgService = new WxMaTemplateMsgServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -61,12 +56,6 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
     String responseContent = this.post(SHORTURL_API_URL, o.toString());
     JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
     return tmpJsonElement.getAsJsonObject().get("short_url").getAsString();
-  }
-
-  @Override
-  public WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException {
-    String responseContent = this.post(SEMANTIC_SEMPROXY_SEARCH_URL, semanticQuery.toJson());
-    return WxMpSemanticQueryResult.fromJson(responseContent);
   }
 
   @Override
@@ -175,7 +164,7 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   }
 
   @Override
-  public WxMpKefuService getKefuService() {
+  public WxMaMsgService getMsgService() {
     return this.kefuService;
   }
 
@@ -192,11 +181,6 @@ public abstract class AbstractWxMaServiceImpl<H, P> implements WxMaService, Requ
   @Override
   public WxMaQrcodeService getQrcodeService() {
     return this.qrCodeService;
-  }
-
-  @Override
-  public WxMaTemplateMsgService getTemplateMsgService() {
-    return this.templateMsgService;
   }
 
 }

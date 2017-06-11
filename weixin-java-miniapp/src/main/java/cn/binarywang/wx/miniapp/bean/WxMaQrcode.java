@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean;
 
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class WxMaQrcode implements Serializable {
   }
 
   public static WxMaQrcode fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMaQrcode.class);
+    return WxMaGsonBuilder.INSTANCE.create().fromJson(json, WxMaQrcode.class);
   }
 
   public String getPath() {
@@ -36,6 +36,6 @@ public class WxMaQrcode implements Serializable {
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMaGsonBuilder.INSTANCE.create().toJson(this);
   }
 }

@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.kefu.result;
 
-import cn.binarywang.wx.miniapp.util.json.WxMpGsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -14,7 +14,7 @@ public class WxMpKfList {
   private List<WxMpKfInfo> kfList;
 
   public static WxMpKfList fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfList.class);
+    return WxMaGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfList.class);
   }
 
   @Override

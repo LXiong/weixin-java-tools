@@ -21,9 +21,8 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   @Override
   public File createQrcode(String path, int width) throws WxErrorException {
     String url = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
-    File file = this.wxMaService.execute(QrCodeRequestExecutor.create(this.wxMaService.getRequestHttp()),
+    return this.wxMaService.execute(QrCodeRequestExecutor.create(this.wxMaService.getRequestHttp()),
       url, new WxMaQrcode(path, width));
-    return file;
   }
 
 }
